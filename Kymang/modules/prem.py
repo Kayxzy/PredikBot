@@ -15,6 +15,8 @@ async def extract_user(message):
 
 @bot.on_message(filters.command("prem") & filters.user(ADMINS))
 async def add_members(c, m):
+    if c.me.id != BOT_ID:
+        return
     if m.from_user.id not in ADMINS:
         return
 
@@ -61,6 +63,8 @@ async def add_members(c, m):
 
 @bot.on_message(filters.command("unprem")& filters.user(ADMINS))
 async def del_members(c, m):
+    if c.me.id != BOT_ID:
+        return
     if m.from_user.id not in ADMINS:
         return
 
