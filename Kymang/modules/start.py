@@ -88,8 +88,8 @@ async def start_bot(c, m):
 @bot.on_message(filters.command("predik"))
 async def predik(c, m):
     user_id = m.from_user.id
-    cek = await cek_seller(c.me.id)
-    sellers = await seller_info(c.me.id, user_id)
+    cek = await cek_owner(c.me.id)
+    sellers = await cek_seller(c.me.id, user_id)
     for i in cek:
         owner = i["owner"]
     if not sellers and user_id != owner:
