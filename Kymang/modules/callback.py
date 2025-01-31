@@ -130,7 +130,7 @@ async def buat_bot(c, callback_query: CallbackQuery):
         return
     
     user_id = callback_query.from_user.id
-    seller = await cek_seller(user_id)  # Hanya menggunakan user_id untuk memeriksa seller
+    seller = await cek_seller()  # Hanya menggunakan user_id untuk memeriksa seller
     
     if not seller:
         await callback_query.message.edit(
