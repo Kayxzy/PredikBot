@@ -112,7 +112,7 @@ async def _(_, callback_query: CallbackQuery):
             ]
         ),
     )
-
+      
 
 @bot.on_callback_query(filters.regex("cb_status"))
 async def _(_, callback_query: CallbackQuery):
@@ -153,7 +153,7 @@ async def _(c, callback_query: CallbackQuery):
     user_id = callback_query.from_user.id
     kymang = await cek_seller()
     if user_id not in MEMBER and user_id not in kymang:
-        return await callback_query.message.edit(
+        await callback_query.message.edit(
             "**🤖 Buat Fsub Bot**\n\n**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk bisa membuat Bot Fsub Premium!**",
             reply_markup=InlineKeyboardMarkup(
             [
@@ -168,13 +168,6 @@ async def _(c, callback_query: CallbackQuery):
             ]
         ),
     )
-        
-
-
-# Menangani callback untuk mendapatkan prediksi lain
-@bot.on_callback_query(filters.regex("get_another_prediction"))
-async def get_another_prediction(_, callback_query):
-    user_id = callback_query.from_user.id  # Mendapatkan ID pengguna
     current_time = datetime.now()
 
     # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
