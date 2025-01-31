@@ -20,8 +20,6 @@ from .start import (
     buttons2,
     cancel,
     start_msg,
-    about_msg,
-    mbuttons
 )
 
 lonte = []
