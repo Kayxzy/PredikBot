@@ -152,9 +152,7 @@ async def buat_bot(c, callback_query: CallbackQuery):
         return
 
     user_id = callback_query.from_user.id
-    kymang = await cek_seller()
-
-    if user_id not in MEMBER and user_id not in kymang:
+    if user_id not in MEMBER:
         await callback_query.message.edit(
             "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**",
             reply_markup=InlineKeyboardMarkup(
