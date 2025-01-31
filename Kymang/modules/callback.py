@@ -165,7 +165,7 @@ async def buat_bot(c, callback_query: CallbackQuery):
     formatted_time = wib_time.strftime("%H:%M")  # Format jam:menit
 
     # Mengedit pesan dengan prediksi baru dan waktu yang diprediksi
-    return await callback_query.edit_message_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}",
+        await callback_query.edit_message_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}",
     reply_markup=InlineKeyboardMarkup(
             [
                  InlineKeyboardButton(f"Coba Lagi",
