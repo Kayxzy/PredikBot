@@ -17,8 +17,7 @@ aktifdb = mongodb.aktif
 admindb = mongodb.admin
 sellerdb = mongodb.seller
 protectdb = mongodb.protect
-maxsubdb = mongodb.max
-acces = mongodb.prem
+membersprem = mongodb.members
 
 # bot
 async def get_bot():
@@ -253,22 +252,60 @@ async def add_access(user_id, days):
     }
     
     # Menyimpan data ke MongoDB
-    result = acces.insert_one(access_data)
-    return result.inserted_id  # Mengembalikan ID dokumen yang baru ditambahkan
+    from pymongo import MongoClient
+from datetime import datetime, timedelta
+
+
+async def add_member(user_id, duration):
+    """Menambahkan anggota dengan durasi akses."""
+    end_time = datetime.now() + timedelta(days=duration)
+    member_data = membersprem{
+        "user_id": user_id,
+        "end_time": end_time
+    }
+    
+    # Cek apakah anggota sudah ada
+    existing_member = membersprem.find_one({"user_id": user_id})
+    if existing_member:
+        return "User  sudah menjadi member."
+    
+    # Tambahkan anggota ke koleksi
+    membersprem.insert_one(member_data)
+    return f"User  {user_id} ditambahkan dengan akses selama {duration} hari."
 
 async def check_access(user_id):
-    access_data = acces.find_one({"user_id": user_id})
-    
-    if access_data:
-        current_time = datetime.now()
-        if current_time < access_data["end_time"]:
+    """Memeriksa apakah pengguna memiliki akses."""
+    member_data = membersprem.find_one({"user_id": user_id})
+    if member_data:
+        if datetime.now() < member_data["end_time"]:
             return True  # Pengguna memiliki akses
         else:
-            # Jika akses sudah habis, hapus data dari koleksi
-            acces.delete_one({"user_id": user_id})
+            # Hapus data jika akses sudah habis
+            membersprem.delete_one({"user_id": user_id})
             return False  # Akses sudah habis
     return False  # Pengguna tidak ditemukan
 
-async def max_info(user_id):
-    active = await maxsubdb.find_one({"_id": user_id})
-    return 2 if not active else active["maxsub"]
+async def remove_member(user_id):
+    """Menghapus anggota dari koleksi."""
+    result = membersprem.delete_one({"user_id": user_id})
+    if result.deleted_count > 0:
+        return f"User  {user_id} sudah dihapus dari members."
+    return "User  tidak ditemukan."
+
+# Contoh penggunaan
+async def main():
+    user_id = "123456789"  # Ganti dengan ID pengguna yang sesuai
+    duration = 1  # Durasi dalam hari
+
+    # Menambahkan anggota
+    print(await add_member(user_id, duration))
+
+    # Memeriksa akses
+    if await check_access(user_id):
+        print(f"User  {user_id} memiliki akses.")
+    else:
+        print(f"User  {user_id} tidak memiliki akses.")
+
+    # Menghapus anggota
+    print(await remove_member(user_id))
+
