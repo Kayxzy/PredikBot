@@ -128,9 +128,11 @@ async def back_start_bc(c, callback_query: CallbackQuery):
 async def buat_bot(c, callback_query: CallbackQuery):
     if c.me.id != BOT_ID:
         return
-
+    
     user_id = callback_query.from_user.id
-    if user_id not in MEMBER:
+    seller = await seller_info(user_id)  # Hanya menggunakan user_id untuk memeriksa seller
+    
+    if not in seller:
         await callback_query.message.edit(
             "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**")
         await callback_query.message.edit_reply_markup(
