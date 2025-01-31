@@ -93,10 +93,10 @@ async def predik(_, c, msg):
     for i in cek:
         owner = i["owner"]
     if not seller and msg.from_user.id != owner:
-        return
-    msg = await msg.reply_text(
+        return await msg.reply_text(
             "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**"
         )
+        return
     current_time = datetime.now()
 
     # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
