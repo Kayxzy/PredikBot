@@ -18,8 +18,6 @@ from pyrogram.types import *
 
 from Kymang import Bot, bot
 from Kymang.config import *
-from Kymang.modules.btn import *
-from Kymang.modules.data import *
 from Kymang.modules.func import *
 
 
@@ -186,55 +184,6 @@ async def del_users(c, m):
     return await restart()
 
 
-@bot.on_message(filters.command("akses") & filters.user(ADMINS))
-async def member_prem(c, m):
-    if c.me.id != BOT_ID:
-        return
-
-    if len(m.command) < 3:
-        return await m.reply(
-            "Gunakan format: /akses <user_id> <hari>\nContoh: /akses 5081430435 1"
-        )
-
-    iya = await seller_info(m.from_user.id)
-    if not iya and m.from_user.id not in ADMINS:
-        return
-
-    ids = m.command[1]
-    hari = m.command[2]
-
-    # Cek apakah ID yang diberikan adalah angka
-    try:
-        user_id = int(ids)
-        days = int(hari)
-    except ValueError:
-        return await m.reply("User  ID dan hari harus berupa angka.")
-
-    if user_id not in MEMBER:
-        MEMBER.append(user_id)
-        # Menghitung durasi akses dalam detik
-        ACCESS_DURATION = days * 24 * 60 * 60  # Mengasumsikan 1 hari = 24 jam
-        ACCESS_TIME[user_id] = datetime.now() + timedelta(seconds=ACCESS_DURATION)  # Set waktu akses
-        await m.reply(f"{user_id} Berhasil ditambahkan ke member premium selama {days} hari.")
-        
-        # Memberikan waktu tunggu sebelum mengirim pesan konfirmasi
-        await asyncio.sleep(2)  # Tunggu 2 detik
-        await m.reply(f"Anda telah memberikan akses premium kepada {user_id} selama {days} hari.")
-        # Tambahkan akses ke MongoDB
-        access_id = await add_access(user_id, days)
-    else:
-        await m.reply(f"Maaf, {user_id} sudah menjadi member premium.")
-
-# Fungsi untuk memeriksa dan menghapus member yang aksesnya sudah habis
-async def check_access():
-    while True:
-        current_time = datetime.now()
-        for user_id in list(MEMBER):  # Menggunakan list untuk menghindari modifikasi saat iterasi
-            if current_time >= ACCESS_TIME[user_id]:
-                MEMBER.remove(user_id)
-                del ACCESS_TIME[user_id]
-                await bot.send_message(user_id, "Akses premium Anda telah berakhir.")
-        await asyncio.sleep(60)  # Cek setiap 60 detik
         
 @bot.on_message(filters.command("setexp") & filters.user(ADMINS))
 async def add_aktif_bot(c, m):
