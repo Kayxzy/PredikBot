@@ -170,6 +170,8 @@ async def _(c, callback_query: CallbackQuery):
     )
         return
     user_id = callback_query.from_user.id  # Mendapatkan ID pengguna
+    kymang = await cek_seller()
+    if user_id not in MEMBER and user_id not in kymang:
     current_time = datetime.now()
 
     # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
