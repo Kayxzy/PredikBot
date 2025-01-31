@@ -147,27 +147,24 @@ async def back_start_bc(c, callback_query: CallbackQuery):
 
 
 @bot.on_callback_query(filters.regex("buat_bot"))
-async def _(c, callback_query: CallbackQuery):
+async def buat_bot(c, callback_query: CallbackQuery):
     if c.me.id != BOT_ID:
         return
+
     user_id = callback_query.from_user.id
     kymang = await cek_seller()
+
     if user_id not in MEMBER and user_id not in kymang:
         await callback_query.message.edit(
-            "**🤖 Buat Fsub Bot**\n\n**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk bisa membuat Bot Fsub Premium!**",
+            "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**",
             reply_markup=InlineKeyboardMarkup(
-            [
                 [
-                    InlineKeyboardButton(text="👨‍💻 Admin", user_id=1399943740),
-                ],
-                [
-                    InlineKeyboardButton(
-                        "Back", callback_data="back_start"
-                    ),
-                ],
-            ]
-        ),
-    )
+                    [InlineKeyboardButton(text="👨‍💻 Admin", user_id=1399943740)],
+                    [InlineKeyboardButton("Back", callback_data="back_start")],
+                ]
+            ),
+        )
+        return
     current_time = datetime.now()
 
     # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
