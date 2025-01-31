@@ -52,26 +52,6 @@ async def _(_, query: CallbackQuery):
         ),
     )
 
-@bot.on_callback_query(filters.regex("cb_help"))
-async def _(_, query: CallbackQuery):
-    return await query.edit_message_text("""<b>
-    **❏ Perintah Untuk Admin Bot.
-    ├/info - Untuk melihat masa aktif bot anda
-    ├/setdb - Untuk mengatur channel database anda
-    ├/addadmin - Untuk menambahkan admin bot
-    ├/deladmin - Untuk menghapus admin bot
-    ├/listadmin - Untuk menampilkan daftar admin
-    ├/users - Untuk cek pengguna bot
-    ├/broadcast - Untuk kirim pesan broadcast 
-    ├/batch - Untuk membuat link lebih dari satu file
-    ├/genlink - Untuk buat tautan untuk satu posting
-    ├/protect -  Untuk privasi konten anda
-    ├/addbutton - Untuk menambahkan tombol
-    ├/delbutton - Untuk menghapus tombol
-    └/listbutton - Untuk melihat daftar tombol**</b>""",
-    reply_markup=InlineKeyboardMarkup(mbuttons),
-    )
-
 
 @bot.on_callback_query(filters.regex("cb_about"))
 async def _(c: Client, query: CallbackQuery):
