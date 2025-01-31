@@ -34,6 +34,7 @@ msg = """
       #  sys.exit(0)
 
 async def main():
+async def on_startup():
     await bot.start()
     
     for bt in await get_bot():
@@ -51,6 +52,7 @@ async def main():
     await plernya()
     #await auto_restart()
     await idle()
+
 
 
 if __name__ == "__main__":
