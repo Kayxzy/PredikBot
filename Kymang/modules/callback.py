@@ -152,26 +152,6 @@ async def _(c, callback_query: CallbackQuery):
         return
     user_id = callback_query.from_user.id
     kymang = await cek_seller()
-    if user_id not in MEMBER and user_id not in kymang:
-        await callback_query.message.edit(
-            "**🤖 Buat Fsub Bot**\n\n**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk bisa membuat Bot Fsub Premium!**",
-            reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(text="👨‍💻 Admin", user_id=1399943740),
-                ],
-                [
-                    InlineKeyboardButton(
-                        "Back", callback_data="back_start"
-                    ),
-                ],
-            ]
-        ),
-    )
-        return
-    user_id = callback_query.from_user.id  # Mendapatkan ID pengguna
-    kymang = await cek_seller()
-    if user_id not in MEMBER and user_id not in kymang:
     current_time = datetime.now()
 
     # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
@@ -193,7 +173,25 @@ async def _(c, callback_query: CallbackQuery):
 
     # Mengedit pesan dengan prediksi baru dan waktu yang diprediksi
     await callback_query.message.edit_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", reply_markup=callback_query.message.reply_markup)
-
+    if user_id not in MEMBER and user_id not in kymang:
+        await callback_query.message.edit(
+            "**🤖 Buat Fsub Bot**\n\n**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk bisa membuat Bot Fsub Premium!**",
+            reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(text="👨‍💻 Admin", user_id=1399943740),
+                ],
+                [
+                    InlineKeyboardButton(
+                        "Back", callback_data="back_start"
+                    ),
+                ],
+            ]
+        ),
+    )
+        return
+    
+    
 
 @bot.on_callback_query(filters.regex("support"))
 async def _(c, callback_query: CallbackQuery):
