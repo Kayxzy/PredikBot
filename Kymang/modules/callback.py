@@ -172,7 +172,7 @@ async def _(c, callback_query: CallbackQuery):
 
 
 # Menangani callback untuk mendapatkan prediksi lain
-@app.on_callback_query(filters.regex("get_another_prediction"))
+@bot.on_callback_query(filters.regex("get_another_prediction"))
 async def get_another_prediction(_, callback_query):
     user_id = callback_query.from_user.id  # Mendapatkan ID pengguna
     current_time = datetime.now()
