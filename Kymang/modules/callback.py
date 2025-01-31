@@ -24,7 +24,8 @@ from .start import (
 )
 
 lonte = []
-
+# Dictionary untuk menyimpan waktu terakhir pengguna menggunakan perintah
+last_used = {}
 
 logs = logging.getLogger(__name__)
 
