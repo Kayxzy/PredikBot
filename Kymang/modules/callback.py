@@ -255,54 +255,28 @@ async def _(c, callback_query: CallbackQuery):
         admin_ids = int(admin_id.text)
     except ValueError:
         admin_id = await c.ask(user_id,
-            "Bukan ID Pengguna Yang Valid, ID Pengguna Haruslah Berupa Integer",
-            filters=filters.text,
-        )
-    owner_id = await c.ask(
-        user_id,
-        "**Silakan Masukan ID Owner Untuk Bot Anda !**",
-        filters=filters.text,
-    )
-    if await cancel(callback_query, owner_id.text):
-        return
-    try:
-        owner_ids = int(owner_id.text)
-    except ValueError:
-        owner_id = await c.ask(user_id,
-            "Bukan ID Pengguna Yang Valid, ID Pengguna Haruslah Berupa Integer",
-            filters=filters.text,
-        )
-    await c.send_message(user_id, "**Sukses Di Deploy . Silakan Tunggu Sebentar...**")
-    await add_bot(str(mang.me.id), api_ids, api_hash.text, bot_token.text)
-    await add_owner(mang.me.id, owner_ids, int(channel_id.text))
-    await add_admin(mang.me.id, admin_ids)
-    await add_sub(
-        mang.me.id,
-        int(sub_id.text),
-    )
-    time = (datetime.now() + timedelta(30)).strftime("%d-%m-%Y")
-    await add_timer(mang.me.id, time)
-    anu = await c.send_message(
-        LOG_GRP,
-        f"**• Nama** : {mang.me.first_name}\n**• Username** : @{mang.me.username}\n**Id**: {mang.me.id}\n**• Masa Aktif** : {time}\n\n**• Pembuat**: {callback_query.from_user.mention}\n**• Id Pengguna**: {callback_query.from_user.id}",
-    )
+user_id = callback_query.from_user.id  # Mendapatkan ID pengguna
+    current_time = datetime.now()
 
-    await c.pin_chat_message(LOG_GRP, anu.id)
-    sinting = InlineKeyboardMarkup(
-        [
-            [
-                InlineKeyboardButton(
-                    "✅ Bot Aktif", callback_data=f"telah_aktif {callback_query.from_user.id} {mang.me.username}"
-                )
-            ]
-        ]
-    )
-    await c.send_message(LOG_GRP, f"Pesan untuk deployer @{mang.me.username}", reply_markup=sinting
-    )
-    os.popen(f"rm {name_id}*")
-    for mod in loadModule():
-            importlib.reload(importlib.import_module(f"Kymang.modules.{mod}"))
-    await c.send_message(user_id, "**Bot Fsub Anda Sudah Aktif Dan Bisa Langsung Digunakan !\n\nKetik /help Di Bot Anda Untuk Melihat Perintah Yang Tersedia .\n\nTerima Kasih ...**")
+    # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
+    if user_id in last_used:
+        time_diff = current_time - last_used[user_id]
+        if time_diff < timedelta(seconds=10):
+            remaining_time = 10 - time_diff.seconds
+            await callback_query.answer(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
+            return
+
+    # Memperbarui waktu terakhir digunakan
+    last_used[user_id] = current_time
+
+    bar = random.choice(selections)  # Memilih prediksi baru
+    
+    # Mendapatkan waktu saat ini dan menambahkannya 7 jam untuk WIB, lalu menambah 1 menit
+    wib_time = datetime.now() + timedelta(hours=7, minutes=1)
+    formatted_time = wib_time.strftime("%H:%M")  # Format jam:menit
+
+    # Mengedit pesan dengan prediksi baru dan waktu yang diprediksi
+    await callback_query.message.edit_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", reply_markup=callback_query.message.reply_markup)
 
 
 @bot.on_callback_query(filters.regex("support"))
