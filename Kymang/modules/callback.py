@@ -132,7 +132,7 @@ async def buat_bot(c, callback_query: CallbackQuery):
     user_id = callback_query.from_user.id
     seller = await seller_info(user_id)  # Hanya menggunakan user_id untuk memeriksa seller
     
-    if not in seller:
+    if not seller:
         await callback_query.message.edit(
             "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**")
         await callback_query.message.edit_reply_markup(
