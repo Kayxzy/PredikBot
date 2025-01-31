@@ -92,13 +92,7 @@ async def predik(_, msg):
     user_id = msg.from_user.id
     if user_id not in MEMBER:
         await msg.reply_text(
-            "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**",
-            reply_markup=InlineKeyboardMarkup(
-                [
-                    [InlineKeyboardButton(text="👨‍💻 Admin", user_id=1399943740)],
-                    [InlineKeyboardButton("Back", callback_data="back_start")],
-                ]
-            ),
+            "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**"
         )
         return
     current_time = datetime.now()
