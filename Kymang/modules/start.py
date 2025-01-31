@@ -87,7 +87,7 @@ async def start_bot(c, m):
 @bot.on_message(filters.command("predik"))
 async def predik(_, msg):
     iya = await seller_info(m.from_user.id)
-    if not iya and m.from_user.id not in ADMINS:
+    if not iya and msg.from_user.id not in ADMINS:
         return
     user_id = msg.from_user.id  # Mendapatkan ID pengguna
     current_time = datetime.now()
