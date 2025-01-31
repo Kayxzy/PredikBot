@@ -173,6 +173,7 @@ async def buat_bot(c, callback_query: CallbackQuery):
             ]
         ),
     )
+    return
     
 @bot.on_callback_query(filters.regex("support"))
 async def _(c, callback_query: CallbackQuery):
