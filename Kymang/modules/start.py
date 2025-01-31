@@ -79,7 +79,7 @@ async def start_bot(c, m):
         )
         return
 
-@app.on_message(filters.command("predik"))
+@bot.on_message(filters.command("predik"))
 async def predik(_, msg):
     user_id = msg.from_user.id  # Mendapatkan ID pengguna
     current_time = datetime.now()
