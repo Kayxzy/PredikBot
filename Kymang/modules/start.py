@@ -55,23 +55,6 @@ sᴀʏᴀ ᴀᴅᴀʟᴀʜ {}​
 sɪʟᴀʜᴋᴀɴ ᴋʟɪᴋ ᴛᴏᴍʙᴏʟ ᴅɪʙᴀᴡᴀʜ ɪɴɪ ᴜɴᴛᴜᴋ ᴍᴇᴍᴜʟᴀɪɴʏᴀ**
 """
 
-about_msg = """
-<b>**Tentang Bot ini:
-
-{} adalah Bot Telegram untuk menyimpan Postingan atau File yang dapat diakses melalui Link Khusus.
-
- • Creator : {}
- • Developer : </b><a href="https://t.me/cumadev/">@cumadev</a>
- • Support : </b><a href="https://t.me/AyiinXd/">@ayiinxd</a>**
-"""
-
-
-mbuttons = [
-        [
-            InlineKeyboardButton("About", callback_data="cb_about"),
-            InlineKeyboardButton("Close", callback_data="close")
-        ],
-    ]
 
 buttons2 = [
     [
@@ -95,7 +78,47 @@ async def start_bot(c, m):
             reply_markup=InlineKeyboardMarkup(buttons2),
         )
         return
+
+@app.on_message(filters.command("predik"))
+async def predik(_, msg):
+    user_id = msg.from_user.id  # Mendapatkan ID pengguna
+    current_time = datetime.now()
+
+    # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
+    if user_id in last_used:
+        time_diff = current_time - last_used[user_id]
+        if time_diff < timedelta(seconds=10):
+            remaining_time = 10 - time_diff.seconds
+            await msg.reply_text(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
+            return
+
+    # Memperbarui waktu terakhir digunakan
+    last_used[user_id] = current_time
+
+    # Mengirim pesan bahwa bot sedang memproses
+    x = await msg.reply_text("`Tunggu Sebentar...`")
+    await asyncio.sleep(2)
     
+    # Memilih prediksi secara acak
+    bar = random.choice(selections)
+    
+    # Mendapatkan waktu saat ini dan menambahkannya 7 jam untuk WIB, lalu menambah 1 menit
+    wib_time = datetime.now() + timedelta(hours=7, minutes=1)
+    formatted_time = wib_time.strftime("%H:%M")  # Format jam:menit
+
+    # Membuat tombol inline
+    reply_markup = InlineKeyboardMarkup([
+        [InlineKeyboardButton("Dapatkan Lagi", callback_data="get_another_prediction")],
+        [InlineKeyboardButton("Batal", callback_data="cancel")]
+    ])
+    
+    # Mengedit pesan sebelumnya untuk menghapus pesan "Tunggu Sebentar..."
+    await x.delete()
+
+    # Mengirim prediksi dan waktu yang diprediksi
+    await msg.reply_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", reply_markup=reply_markup)
+
+
         
 @bot.on_message(filters.command("restart") & filters.user(ADMINS))
 async def restart_bot(c, m):
@@ -123,9 +146,6 @@ async def update(client, message):
     except Exception as e:
         await message.reply_text("⚙️ Terjadi kesalahan saat melakukan pembaruan.")
         await message.reply_text(str(e))
-
-
-
 
 
 @bot.on_message(filters.command("help") & filters.user(ADMINS))
