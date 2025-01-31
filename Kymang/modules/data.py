@@ -18,7 +18,7 @@ admindb = mongodb.admin
 sellerdb = mongodb.seller
 protectdb = mongodb.protect
 maxsubdb = mongodb.max
-
+acces = mongodb.prem
 
 # bot
 async def get_bot():
@@ -238,6 +238,36 @@ async def add_max(user_id, maxsub):
         )
     else:
         await maxsubdb.insert_one({"_id": user_id, "maxsub": maxsub})
+
+from datetime import datetime, timedelta
+
+async def add_access(user_id, days):
+    end_time = datetime.now() + timedelta(days=days)
+    
+    # Data yang akan disimpan
+    access_data = {
+        "user_id": user_id,
+        "access_level": "prem",
+        "start_time": datetime.now(),
+        "end_time": end_time
+    }
+    
+    # Menyimpan data ke MongoDB
+    result = acces.insert_one(access_data)
+    return result.inserted_id  # Mengembalikan ID dokumen yang baru ditambahkan
+
+async def check_access(user_id):
+    access_data = acces.find_one({"user_id": user_id})
+    
+    if access_data:
+        current_time = datetime.now()
+        if current_time < access_data["end_time"]:
+            return True  # Pengguna memiliki akses
+        else:
+            # Jika akses sudah habis, hapus data dari koleksi
+            acces.delete_one({"user_id": user_id})
+            return False  # Akses sudah habis
+    return False  # Pengguna tidak ditemukan
 
 async def max_info(user_id):
     active = await maxsubdb.find_one({"_id": user_id})
