@@ -157,7 +157,7 @@ async def buat_bot(c, callback_query: CallbackQuery):
             "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**",
             show_alert=True
         )
-            await callback_query.message.edit_reply_markup(
+        await callback_query.message.edit_reply_markup(
             InlineKeyboardMarkup(
                 [
                     [InlineKeyboardButton(text="👨‍💻 Admin", user_id=1399943740)],
