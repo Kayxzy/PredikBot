@@ -167,7 +167,8 @@ async def buat_bot(c, callback_query: CallbackQuery):
     # Mengedit pesan dengan prediksi baru dan waktu yang diprediksi
     await callback_query.edit_message_text(
         text=f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}",
-        reply_markup=InlineKeyboardMarkup(buttons2)  # Pastikan buttons2 adalah list dari InlineKeyboardButton
+        reply_markup=InlineKeyboardMarkup(buttons2),
+    )# Pastikan buttons2 adalah list dari InlineKeyboardButton
     
     
 @bot.on_callback_query(filters.regex("support"))
