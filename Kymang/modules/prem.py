@@ -17,7 +17,7 @@ async def extract_user(message):
 async def add_members(c, m):
     if c.me.id != BOT_ID:
         return
-    if m.from_user.id not in ADMINS:
+    if m.from_user.id not in MEMBERS:
         return
 
     args = m.command[1:]  # Ambil argumen setelah perintah
@@ -65,7 +65,7 @@ async def add_members(c, m):
 async def del_members(c, m):
     if c.me.id != BOT_ID:
         return
-    if m.from_user.id not in ADMINS:
+    if m.from_user.id not in MEMBERS:
         return
 
     args = await extract_user(m)
