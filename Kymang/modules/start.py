@@ -88,11 +88,10 @@ async def start_bot(c, m):
 @bot.on_message(filters.command("predik"))
 async def predik(c, m):
     user_id = m.from_user.id
-    cek = await cek_owner(c.me.id)
+    owner = await cek_owner(c.me.id)
     sellers = await cek_seller()
-    for i in cek:
-        owner = i["owner"]
-    if not sellers and user_id != owner:
+    
+    if not sellers and not owner:
         return await m.reply_text(
             "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**"
         )
