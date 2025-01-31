@@ -1,3 +1,25 @@
+user_id = callback_query.from_user.id  # Mendapatkan ID pengguna
+    current_time = datetime.now()
+
+    # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
+    if user_id in last_used:
+        time_diff = current_time - last_used[user_id]
+        if time_diff < timedelta(seconds=10):
+            remaining_time = 10 - time_diff.seconds
+            await callback_query.answer(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
+            return
+
+    # Memperbarui waktu terakhir digunakan
+    last_used[user_id] = current_time
+
+    bar = random.choice(selections)  # Memilih prediksi baru
+    
+    # Mendapatkan waktu saat ini dan menambahkannya 7 jam untuk WIB, lalu menambah 1 menit
+    wib_time = datetime.now() + timedelta(hours=7, minutes=1)
+    formatted_time = wib_time.strftime("%H:%M")  # Format jam:menit
+
+    # Mengedit pesan dengan prediksi baru dan waktu yang diprediksi
+    await callback_query.message.edit_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", reply_markup=callback_query.message.reply_markup)
 #Kymang
 
 import asyncio
@@ -167,95 +189,7 @@ async def _(c, callback_query: CallbackQuery):
     )
         return
     await callback_query.message.delete()
-    api_id = await c.ask(
-        user_id,
-        "**Dapatkan API ID di web my.telegram.org**\n\n**Silahkan masukan API_ID**",
-        filters=filters.text,
-    )
-    if await cancel(callback_query, api_id.text):
-        return
-    try:
-        api_ids = int(api_id.text)
-    except ValueError:
-        await api_id.reply(
-            "**API ID Haruslah berupa angka.**",
-            quote=True,
-        )
-        return
-    api_hash = await c.ask(
-        user_id,
-        "**Dapatkan API HASH di web my.telegram.org**\n**Silahkan masukan API_HASH**",
-        filters=filters.text,
-    )
-    if await cancel(callback_query, api_hash.text):
-        return
-    bot_token = await c.ask(
-        user_id,
-        "**Dapatkan dari @BotFather**\n**Silahkan masukan BOT TOKEN**",
-        filters=filters.text,
-    )
-    if await cancel(callback_query, bot_token.text):
-        return
-    name_id = bot_token.text.split(":")[0]
-    mang = Bot(
-        name=str(name_id),
-        api_id=api_ids,
-        api_hash=api_hash.text,
-        bot_token=bot_token.text,
-    )
-    try:
-        mang.in_memory = False
-        await mang.start()
-
-        await c.send_message(
-            user_id,
-            f"**🤖 Bot Ditemukan:**\n**• Nama :** {mang.me.mention}\n**• ID :** `/setexp {mang.me.id} 365`\n**• Username :** @{mang.me.username}",
-        )
-    except Exception as e:
-        return await c.send_message(user_id, f"**ERROR**:\n{e}")
-    channel_id = await c.ask(
-        user_id,
-        "**Masukan ID Channel Untuk Database,\n\Pastikan Bot sudah menjadi admin di Channel Database\nContoh -100xxxx**",
-        filters=filters.text,
-    )
-    if await cancel(callback_query, channel_id.text):
-        return
-    try:
-        await mang.export_chat_invite_link(int(channel_id.text))
-        await channel_id.reply(f"Channel Database Ditemukan `{channel_id.text}`", quote=True)
-    except Exception:
-        channel_id = await c.ask(user_id,
-            f"Pastikan @{mang.me.username} adalah admin di Channel Database tersebut.\n\n Channel Database : `{channel_id.text}`\n\nMohon Masukkan Ulang !",
-            filters=filters.text,
-        )
-
-    sub_id = await c.ask(
-        user_id,
-        "**Silakan Masukkan ID Channel Atau Grup Sebagai Force Subscribe !\n\nDan Pastikan Bot Anda Adalah Admin Di Grup/Channel Tersebut.**",
-    )
-    if await cancel(callback_query, sub_id.text):
-        return
-    try:
-        if int(sub_id.text) != 0:
-            await mang.export_chat_invite_link(int(sub_id.text))
-            await sub_id.reply(f"Force-Subs terdeteksi `{sub_id.text}`", quote=True)
-    except Exception:
-        sub_id = await c.ask(user_id,
-            f"Pastikan @{mang.me.username} adalah admin di Channel atau Group tersebut.\n\n Channel atau Group Saat Ini: `{sub_id.text}`\n\nMohon Masukkan Ulang !",
-            filters=filters.text,
-        )
-    admin_id = await c.ask(
-        user_id,
-        "**Silakan Masukan ID Admin Untuk Bot Anda !**",
-        filters=filters.text,
-    )
-    if await cancel(callback_query, admin_id.text):
-        return
-    try:
-        admin_ids = int(admin_id.text)
-    except ValueError:
-        admin_id = await c.ask(user_id,
-user_id = callback_query.from_user.id  # Mendapatkan ID pengguna
+    user_id = callback_query.from_user.id  # Mendapatkan ID pengguna
     current_time = datetime.now()
 
     # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
