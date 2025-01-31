@@ -1,27 +1,3 @@
-user_id = callback_query.from_user.id  # Mendapatkan ID pengguna
-    current_time = datetime.now()
-
-    # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
-    if user_id in last_used:
-        time_diff = current_time - last_used[user_id]
-        if time_diff < timedelta(seconds=10):
-            remaining_time = 10 - time_diff.seconds
-            await callback_query.answer(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
-            return
-
-    # Memperbarui waktu terakhir digunakan
-    last_used[user_id] = current_time
-
-    bar = random.choice(selections)  # Memilih prediksi baru
-    
-    # Mendapatkan waktu saat ini dan menambahkannya 7 jam untuk WIB, lalu menambah 1 menit
-    wib_time = datetime.now() + timedelta(hours=7, minutes=1)
-    formatted_time = wib_time.strftime("%H:%M")  # Format jam:menit
-
-    # Mengedit pesan dengan prediksi baru dan waktu yang diprediksi
-    await callback_query.message.edit_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", reply_markup=callback_query.message.reply_markup)
-#Kymang
-
 import asyncio
 import importlib
 import logging
