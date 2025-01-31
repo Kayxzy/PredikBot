@@ -220,6 +220,8 @@ async def member_prem(c, m):
         # Memberikan waktu tunggu sebelum mengirim pesan konfirmasi
         await asyncio.sleep(2)  # Tunggu 2 detik
         await m.reply(f"Anda telah memberikan akses premium kepada {user_id} selama {days} hari.")
+        # Tambahkan akses ke MongoDB
+        access_id = await add_access(user_id, days)
     else:
         await m.reply(f"Maaf, {user_id} sudah menjadi member premium.")
 
