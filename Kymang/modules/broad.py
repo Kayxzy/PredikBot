@@ -155,25 +155,6 @@ async def cek_admin_bot(c, m):
 
 
 # Misalkan kita menggunakan dictionary untuk menyimpan informasi seller
-seller= {}
-
-async def add_seller(user_id, duration_days=30):
-    # Simpan informasi seller dengan masa aktif
-    expiration_date = datetime.now() + timedelta(days=duration_days)
-    seller[user_id] = expiration_date
-
-async def seller_info(user_id):
-    # Cek apakah user_id ada dalam sellers dan apakah masa aktifnya masih berlaku
-    if user_id in seller:
-        if seller[user_id] > datetime.now():
-            return True
-    return False
-
-async def del_seller(user_id):
-    # Hapus seller dari dictionary
-    if user_id in seller:
-        del seller[user_id]
-
 @bot.on_message(filters.command("prem") & filters.user(ADMINS))
 async def add_seller_sub(c, m):
     if c.me.id != BOT_ID:
@@ -185,12 +166,13 @@ async def add_seller_sub(c, m):
     ids = m.command[1]
     iya = await seller_info(int(ids))
     if not iya:
-        await add_seller(int(ids), duration_days=30)  # Misalkan durasi 30 hari
-        await m.reply(f"User  {ids} Berhasil ditambahkan ke seller dengan masa aktif 30 hari.")
+        await add_seller(int(ids))
+        await m.reply(f"User {ids} Berhasil di tambahkan ke seller")
     else:
-        await m.reply(f"User  {ids} Sudah menjadi seller.")
+        await m.reply(f"User {ids} Sudah menjadi seller")
 
-@bot.on_message(filters.command("delprem") & filters.user(ADMINS))
+
+@bot.on_message(filters.command("dprem") & filters.user(ADMINS))
 async def del_seller_sub(c, m):
     if c.me.id != BOT_ID:
         return
@@ -202,9 +184,10 @@ async def del_seller_sub(c, m):
     iya = await seller_info(int(ids))
     if iya:
         await del_seller(int(ids))
-        await m.reply(f"{ids} Berhasil dihapus dari seller.")
+        await m.reply(f"{ids} Berhasil di hapus dari seller")
     else:
-        await m.reply(f"{ids} Bukan bagian dari seller.")
+        await m.reply(f"{ids} Bukan bagian dari seller")
+
 
 
 @bot.on_message(filters.private & filters.command("protect"))
