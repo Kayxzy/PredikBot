@@ -7,7 +7,6 @@ from Kymang.modules.func import *
 
 # Daftar anggota dengan waktu akses
 MEMBERS = {}  # Menggunakan dictionary untuk menyimpan user_id dan waktu akses
-OWNER_ID = [123456789]  # Ganti dengan ID pemilik yang sesuai
 
 async def extract_user(message):
     # Implementasi fungsi ini sesuai kebutuhan Anda
