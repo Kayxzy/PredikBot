@@ -155,13 +155,15 @@ async def buat_bot(c, callback_query: CallbackQuery):
     if user_id not in MEMBER:
         await callback_query.answer(
             "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**",
-            show_alert=True,
-            reply_markup=InlineKeyboardMarkup(
+            show_alert=True
+        )
+            await callback_query.message.edit_reply_markup(
+            InlineKeyboardMarkup(
                 [
                     [InlineKeyboardButton(text="👨‍💻 Admin", user_id=1399943740)],
                     [InlineKeyboardButton("Back", callback_data="back_start")],
                 ]
-            ),
+            )
         )
         return
     current_time = datetime.now()
