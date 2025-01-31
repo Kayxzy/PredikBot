@@ -66,7 +66,7 @@ buttons2 = [
         InlineKeyboardButton("Predictor 🚀", callback_data="buat_bot"),
     ],
     [
-        InlineKeyboardButton("🎥 Link Daftar", callback_data="cb_tutor"),
+        InlineKeyboardButton("📎 Link Daftar", url="https://suara89.info/biqz"),
         InlineKeyboardButton("👨‍💻 Admin", callback_data="cb_admines"),
     ],
     [
