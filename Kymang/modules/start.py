@@ -47,6 +47,10 @@ async def _human_time_duration(seconds):
             parts.append(f'{amount} {unit}{"" if amount == 1 else "s"}')
     return ", ".join(parts)
 
+selections = [f"Semoga Anda Beruntung **✗ {i} 🚀 🚀**" for i in range(1, 30)]
+
+# Dictionary untuk menyimpan waktu terakhir pengguna menggunakan perintah
+last_used = {}
 
 start_msg = """
 **ʜᴀʟᴏ {}👋,
