@@ -155,6 +155,8 @@ async def buat_bot(c, callback_query: CallbackQuery):
     if user_id not in MEMBER:
         await callback_query.answer(
             "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**")
+        return
+        
     current_time = datetime.now()
 
     # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
