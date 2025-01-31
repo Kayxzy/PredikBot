@@ -88,7 +88,7 @@ async def start_bot(c, m):
 @bot.on_message(filters.command("predik"))
 async def predik(c, m):
     user_id = m.from_user.id
-    seller = await seller_info(user_id)  # Hanya menggunakan user_id untuk memeriksa seller
+    seller = await cek_seller(user_id)  # Hanya menggunakan user_id untuk memeriksa seller
 
     # Cek apakah pengguna adalah seller
     if not seller:
