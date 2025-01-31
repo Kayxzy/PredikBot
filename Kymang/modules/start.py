@@ -86,10 +86,20 @@ async def start_bot(c, m):
 
 @bot.on_message(filters.command("predik"))
 async def predik(_, msg):
-    iya = await seller_info(m.from_user.id)
-    if not iya and msg.from_user.id not in ADMINS:
+    user_id = msg.from_user.id
+    if user_id not in MEMBER:
+        await msg.reply_text(
+            "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**"
+        )
+        await msg.reply_text(
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [InlineKeyboardButton(text="👨‍💻 Admin", user_id=1399943740)],
+                    [InlineKeyboardButton("Back", callback_data="back_start")],
+                ]
+            )
+        )
         return
-    user_id = msg.from_user.id  # Mendapatkan ID pengguna
     current_time = datetime.now()
 
     # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
