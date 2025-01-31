@@ -174,7 +174,8 @@ async def buat_bot(c, callback_query: CallbackQuery):
                     url=f"https://t.me/{c.me.username}?predik={m.command[1]}",
                 )
             ]
-        )
+        ),
+    )
     except IndexError:
         pass
     return                           
