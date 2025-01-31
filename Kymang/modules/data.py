@@ -259,7 +259,7 @@ from datetime import datetime, timedelta
 async def add_member(user_id, duration):
     """Menambahkan anggota dengan durasi akses."""
     end_time = datetime.now() + timedelta(days=duration)
-    member_data = membersprem{
+    member_data = {
         "user_id": user_id,
         "end_time": end_time
     }
