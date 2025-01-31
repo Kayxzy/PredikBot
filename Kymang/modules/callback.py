@@ -25,6 +25,9 @@ from .start import (
 )
 
 lonte = []
+# Daftar pilihan untuk prediksi
+selections = [f"Semoga Anda Beruntung **✗ {i} 🚀 🚀**" for i in range(1, 101)]
+
 # Dictionary untuk menyimpan waktu terakhir pengguna menggunakan perintah
 last_used = {}
 
