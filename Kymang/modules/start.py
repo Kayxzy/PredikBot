@@ -89,7 +89,7 @@ async def start_bot(c, m):
 async def predik(_, msg):
     user_id = msg.from_user.id
     kymang = await cek_seller()
-    if m.from_user.id in kymang:
+    if msg.from_user.id in kymang:
         await msg.reply_text(
             "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**"
         )
