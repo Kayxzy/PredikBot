@@ -34,7 +34,6 @@ msg = """
       #  sys.exit(0)
 
 async def main():
-async def on_startup():
     await bot.start()
     
     for bt in await get_bot():
