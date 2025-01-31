@@ -152,7 +152,6 @@ async def _(c, callback_query: CallbackQuery):
         return
     user_id = callback_query.from_user.id
     kymang = await cek_seller()
-    if user_id not in MEMBER and user_id not in kymang:ang = await cek_seller()
     if user_id not in MEMBER and user_id not in kymang:
         await callback_query.message.edit(
             "**🤖 Buat Fsub Bot**\n\n**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk bisa membuat Bot Fsub Premium!**",
