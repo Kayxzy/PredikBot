@@ -176,10 +176,7 @@ async def buat_bot(c, callback_query: CallbackQuery):
             ]
         ),
     )
-    except IndexError:
-        pass
-    return                           
-
+    
 @bot.on_callback_query(filters.regex("support"))
 async def _(c, callback_query: CallbackQuery):
     user_id = int(callback_query.from_user.id)
