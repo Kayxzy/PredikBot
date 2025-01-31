@@ -165,16 +165,14 @@ async def buat_bot(c, callback_query: CallbackQuery):
     formatted_time = wib_time.strftime("%H:%M")  # Format jam:menit
 
     # Mengedit pesan dengan prediksi baru dan waktu yang diprediksi
-    return await query.edit_message_text((f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}",
+    return await query.edit_message_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}",
     reply_markup=InlineKeyboardMarkup(
             [
-                 InlineKeyboardButton("Coba Lagi",
-                    url=f"https://t.me/{c.me.username}?predik={m.command[1]}",
-                )
+                 InlineKeyboardButton(f"Coba Lagi",
+                    callback_data="buat_bot")
             ]
         ),
     )
-    
     
 @bot.on_callback_query(filters.regex("support"))
 async def _(c, callback_query: CallbackQuery):
