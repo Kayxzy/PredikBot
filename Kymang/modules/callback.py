@@ -169,7 +169,6 @@ async def _(c, callback_query: CallbackQuery):
         ),
     )
         return
-    await callback_query.message.delete()
     user_id = callback_query.from_user.id  # Mendapatkan ID pengguna
     current_time = datetime.now()
 
