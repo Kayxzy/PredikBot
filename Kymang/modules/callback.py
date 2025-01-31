@@ -153,20 +153,16 @@ async def buat_bot(c, callback_query: CallbackQuery):
 
     user_id = callback_query.from_user.id
     if user_id not in MEMBER:
-        await callback_query.answer(
+        await callback_query.message.edit(
             "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**",
-            show_alert=True
-        )
-        await callback_query.message.edit_text(
-            "Anda tidak memiliki akses. Silakan hubungi admin untuk informasi lebih lanjut.",
             reply_markup= InlineKeyboardMarkup(
                 [
                     [InlineKeyboardButton(text="👨‍💻 Admin", user_id=1399943740)],
                     [InlineKeyboardButton("Back", callback_data="back_start")],
                 ]
-            )
+            ),
         )
-        return
+        return buttons
     current_time = datetime.now()
 
     # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
