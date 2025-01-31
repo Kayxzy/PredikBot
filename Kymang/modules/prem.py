@@ -59,7 +59,7 @@ async def add_members(c, m):
         return
 
 
-@bot.on_message(filters.command("unprem")) & filters.user(ADMINS))
+@bot.on_message(filters.command("unprem")& filters.user(ADMINS))
 async def del_members(c, m):
     if m.from_user.id not in ADMINS:
         return
