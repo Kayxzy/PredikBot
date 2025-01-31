@@ -1,6 +1,10 @@
 from datetime import datetime, timedelta
 from pyrogram import filters
 
+from Kymang import Bot, bot
+from Kymang.config import *
+from Kymang.modules.func import *
+
 # Daftar anggota dengan waktu akses
 MEMBERS = {}  # Menggunakan dictionary untuk menyimpan user_id dan waktu akses
 OWNER_ID = [123456789]  # Ganti dengan ID pemilik yang sesuai
@@ -10,10 +14,9 @@ async def extract_user(message):
     # Misalnya, mengembalikan username atau ID dari pesan
     return message.command[1] if len(message.command) > 1 else None
 
-@bot.on_message(filters.command("prem"))
-@ubot.on_message(filters.command("prem", PREFIX) & filters.me)
+@bot.on_message(filters.command("prem") & filters.user(ADMINS))
 async def add_members(c, m):
-    if m.from_user.id not in OWNER_ID:
+    if m.from_user.id not in ADMINS:
         return
 
     args = m.command[1:]  # Ambil argumen setelah perintah
@@ -57,10 +60,9 @@ async def add_members(c, m):
         return
 
 
-@bot.on_message(filters.command("unprem"))
-@ubot.on_message(filters.command("unprem", PREFIX) & filters.me)
+@bot.on_message(filters.command("unprem")) & filters.user(ADMINS))
 async def del_members(c, m):
-    if m.from_user.id not in OWNER_ID:
+    if m.from_user.id not in ADMINS:
         return
 
     args = await extract_user(m)
