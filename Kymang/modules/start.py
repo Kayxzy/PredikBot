@@ -86,14 +86,14 @@ async def start_bot(c, m):
         return
 
 @bot.on_message(filters.command("predik"))
-async def predik(_, c, msg):
-    user_id = msg.from_user.id
+async def predik(c, m):
+    user_id = m.from_user.id
     cek = await cek_owner(c.me.id)
-    seller = await seller_info(c.me.id, msg.from_user.id)
+    seller = await seller_info(c.me.id, user_id)
     for i in cek:
         owner = i["owner"]
-    if not seller and msg.from_user.id != owner:
-        return await msg.reply_text(
+    if not seller and user_id != owner:
+        return await m.reply_text(
             "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**"
         )
         return
@@ -104,14 +104,14 @@ async def predik(_, c, msg):
         time_diff = current_time - last_used[user_id]
         if time_diff < timedelta(seconds=10):
             remaining_time = 10 - time_diff.seconds
-            await msg.reply_text(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
+            await m.reply_text(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
             return
 
     # Memperbarui waktu terakhir digunakan
     last_used[user_id] = current_time
 
     # Mengirim pesan bahwa bot sedang memproses
-    x = await msg.reply_text("`Tunggu Sebentar...`")
+    x = await m.reply_text("`Tunggu Sebentar...`")
     await asyncio.sleep(2)
     
     # Memilih prediksi secara acak
@@ -131,7 +131,7 @@ async def predik(_, c, msg):
     await x.delete()
 
     # Mengirim prediksi dan waktu yang diprediksi
-    await msg.reply_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", reply_markup=reply_markup)
+    await m.reply_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", reply_markup=reply_markup)
 
 
         
