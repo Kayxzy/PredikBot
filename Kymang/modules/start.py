@@ -89,7 +89,7 @@ async def start_bot(c, m):
 async def predik(c, m):
     user_id = m.from_user.id
     cek = await cek_owner(c.me.id)
-    sellers = await cek_seller(c.me.id, user_id)
+    sellers = await cek_seller()
     for i in cek:
         owner = i["owner"]
     if not sellers and user_id != owner:
