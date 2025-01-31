@@ -86,7 +86,7 @@ async def start_bot(c, m):
         return
 
 @bot.on_message(filters.command("predik"))
-async def predik(_, msg):
+async def predik(_, c, msg):
     user_id = msg.from_user.id
     cek = await cek_owner(c.me.id)
     seller = await seller_info(c.me.id, msg.from_user.id)
