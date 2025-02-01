@@ -144,14 +144,14 @@ async def buat_bot(c, callback_query: CallbackQuery):
         time_diff = current_time - last_used[user_id]
         if time_diff < timedelta(seconds=10):
             remaining_time = 10 - time_diff.seconds
-            await query.message.edit(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
+            await callback_query.answer(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
             return
 
     # Memperbarui waktu terakhir digunakan
     last_used[user_id] = current_time
 
     # Mengirim pesan bahwa bot sedang memproses
-    x = await callback_query.message.edit("`Tunggu Sebentar...`")
+    x = await m.reply_text("`Tunggu Sebentar...`")
     await asyncio.sleep(2)
     
     # Memilih prediksi secara acak
@@ -171,7 +171,8 @@ async def buat_bot(c, callback_query: CallbackQuery):
     await x.delete()
 
     # Mengirim prediksi dan waktu yang diprediksi
-    await callback_query.message.edit(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", reply_markup=reply_markup)
+    await m.reply_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", reply_markup=reply_markup)
+
 
     
 @bot.on_callback_query(filters.regex("support"))
