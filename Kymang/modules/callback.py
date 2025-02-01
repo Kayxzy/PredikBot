@@ -144,7 +144,7 @@ async def buat_bot(c, callback_query: CallbackQuery):
         time_diff = current_time - last_used[user_id]
         if time_diff < timedelta(seconds=10):
             remaining_time = 10 - time_diff.seconds
-            await callback_query.answer(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
+            await m.reply_text(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
             return
 
     # Memperbarui waktu terakhir digunakan
@@ -172,7 +172,6 @@ async def buat_bot(c, callback_query: CallbackQuery):
 
     # Mengirim prediksi dan waktu yang diprediksi
     await m.reply_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", reply_markup=reply_markup)
-
 
     
 @bot.on_callback_query(filters.regex("support"))
