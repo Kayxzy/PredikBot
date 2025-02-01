@@ -151,7 +151,7 @@ async def buat_bot(c, callback_query: CallbackQuery):
     last_used[user_id] = current_time
 
     # Mengirim pesan bahwa bot sedang memproses
-    x = await c.send_message("`Tunggu Sebentar...`")
+    await c.send_message("`Tunggu Sebentar...`")
     await asyncio.sleep(2)
     
     # Memilih prediksi secara acak
