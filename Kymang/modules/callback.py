@@ -144,7 +144,7 @@ async def buat_bot(c, callback_query: CallbackQuery):
         time_diff = current_time - last_used[user_id]
         if time_diff < timedelta(seconds=10):
             remaining_time = 10 - time_diff.seconds
-            await callback_query.message.edit(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
+            await query.message.edit(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
             return
 
     # Memperbarui waktu terakhir digunakan
