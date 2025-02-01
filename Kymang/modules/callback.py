@@ -11,7 +11,6 @@ from pyrogram.types import *
 from Kymang import Bot, bot
 from Kymang.config import *
 from Kymang.modules import loadModule
-from Kymang.modules.btn import *
 from Kymang.modules.data import *
 from Kymang.modules.func import *
 
