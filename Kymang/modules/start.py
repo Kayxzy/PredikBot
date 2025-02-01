@@ -91,7 +91,7 @@ async def predik(c, m):
 
     # Cek apakah pengguna adalah seller
     if not seller:
-        await m.reply_text("**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**")
+        await m.reply_text("**Untuk mengakses fitur Premium ini, Anda perlu meminta akses melalui admin.**\n**Silakan hubungi admin di menu /start**")
         return
     current_time = datetime.now()
 
