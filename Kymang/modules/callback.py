@@ -148,8 +148,6 @@ async def get_another_prediction(_, callback_query):
 
     # Memperbarui waktu terakhir digunakan
     last_used[user_id] = current_time
-    x = await callback_query.message.reply_text("`Tunggu Sebentar...`")
-    await asyncio.sleep(2)
     bar = random.choice(selections)  # Memilih prediksi baru
     
     # Mendapatkan waktu saat ini dan menambahkannya 7 jam untuk WIB, lalu menambah 1 menit
