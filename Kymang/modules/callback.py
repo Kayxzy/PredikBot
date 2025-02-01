@@ -124,21 +124,20 @@ async def back_start_bc(c, callback_query: CallbackQuery):
     )
 
 
-@bot.on_callback_query(filters.regex("buat_bot"))
-async def buat_bot(c, callback_query: CallbackQuery):
-    if c.me.id != BOT_ID:
-        return
+
+        
     
-    user_id = callback_query.from_user.id
+@app.on_callback_query(filters.regex("get_prediction"))
+async def get_another_prediction(_, callback_query):
+    user_id = callback_query.from_user.id# Mendapatkan ID pengguna
     seller = await seller_info(user_id)  # Hanya menggunakan user_id untuk memeriksa seller
     
     if not seller:
         await callback_query.message.edit(
             "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**")
         return
-        
     current_time = datetime.now()
-
+    
     # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
     if user_id in last_used:
         time_diff = current_time - last_used[user_id]
@@ -155,10 +154,8 @@ async def buat_bot(c, callback_query: CallbackQuery):
     # Mendapatkan waktu saat ini dan menambahkannya 7 jam untuk WIB, lalu menambah 1 menit
     wib_time = datetime.now() + timedelta(hours=7, minutes=1)
     formatted_time = wib_time.strftime("%H:%M")  # Format jam:menit
-    
-    # Membuat tombol inline "Coba Lagi"
     reply_markup = InlineKeyboardMarkup([
-        [InlineKeyboardButton("Coba Lagi", callback_data="buat_ubot")],
+        [InlineKeyboardButton("Coba Lagi", callback_data="get_prediction")],
         [InlineKeyboardButton("Batal", callback_data="cancel")]
     ])
     # Mengedit pesan dengan prediksi baru dan waktu yang diprediksi
