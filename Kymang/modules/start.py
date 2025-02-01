@@ -120,7 +120,7 @@ async def predik(c, m):
 
     # Membuat tombol inline
     reply_markup = InlineKeyboardMarkup([
-        [InlineKeyboardButton("Dapatkan Lagi", callback_data="get_another_prediction")],
+        [InlineKeyboardButton("Dapatkan Lagi", callback_data="buat_ubot")],
         [InlineKeyboardButton("Batal", callback_data="cancel")]
     ])
     
