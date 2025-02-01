@@ -51,8 +51,6 @@ selections = [f"Semoga Anda Beruntung **✗ {i} 🚀 🚀**" for i in range(1, 3
 # Dictionary untuk menyimpan waktu terakhir pengguna menggunakan perintah
 last_used = {}
 
-ACCESS_TIME = {}  # Menyimpan waktu akses member premium
-                                 
 start_msg = """
 **ʜᴀʟᴏ {}👋,
 
