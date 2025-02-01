@@ -140,8 +140,6 @@ async def back_start_bc(c, callback_query: CallbackQuery):
     )
 
 
-
-        
     
 @bot.on_callback_query(filters.regex("get_prediction"))
 async def get_another_prediction(_, callback_query):
@@ -306,3 +304,5 @@ async def cb_close(c, query: CallbackQuery):
         await query.message.delete()
     except BaseException as e:
         logs.info(e)
+
+
