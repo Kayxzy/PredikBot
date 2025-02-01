@@ -144,34 +144,25 @@ async def buat_bot(c, callback_query: CallbackQuery):
         time_diff = current_time - last_used[user_id]
         if time_diff < timedelta(seconds=10):
             remaining_time = 10 - time_diff.seconds
-            await c.send_message(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
+            await callback_query.answer(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
             return
 
     # Memperbarui waktu terakhir digunakan
     last_used[user_id] = current_time
 
-    # Mengirim pesan bahwa bot sedang memproses
-    await c.send_message("`Tunggu Sebentar...`")
-    await asyncio.sleep(2)
-    
-    # Memilih prediksi secara acak
-    bar = random.choice(selections)
+    bar = random.choice(selections)  # Memilih prediksi baru
     
     # Mendapatkan waktu saat ini dan menambahkannya 7 jam untuk WIB, lalu menambah 1 menit
     wib_time = datetime.now() + timedelta(hours=7, minutes=1)
     formatted_time = wib_time.strftime("%H:%M")  # Format jam:menit
-
-    # Membuat tombol inline
+    
+    # Membuat tombol inline "Coba Lagi"
     reply_markup = InlineKeyboardMarkup([
-        [InlineKeyboardButton("Dapatkan Lagi", callback_data="buat_ubot")],
+        [InlineKeyboardButton("Coba Lagi", callback_data="buat_ubot")],
         [InlineKeyboardButton("Batal", callback_data="cancel")]
     ])
-    
-    # Mengedit pesan sebelumnya untuk menghapus pesan "Tunggu Sebentar..."
-    await x.delete()
-
-    # Mengirim prediksi dan waktu yang diprediksi
-    await c.send_message(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", reply_markup=reply_markup)
+    # Mengedit pesan dengan prediksi baru dan waktu yang diprediksi
+    await callback_query.message.edit_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", reply_markup=callback_query.message.reply_markup)
 
 
     
