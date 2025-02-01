@@ -51,7 +51,6 @@ selections = [f"Semoga Anda Beruntung **✗ {i} 🚀 🚀**" for i in range(1, 3
 # Dictionary untuk menyimpan waktu terakhir pengguna menggunakan perintah
 last_used = {}
 
-MEMBER = []  # Daftar member premium
 ACCESS_TIME = {}  # Menyimpan waktu akses member premium
                                  
 start_msg = """
@@ -64,7 +63,7 @@ sɪʟᴀʜᴋᴀɴ ᴋʟɪᴋ ᴛᴏᴍʙᴏʟ ᴅɪʙᴀᴡᴀʜ ɪɴɪ ᴜɴ�
 
 buttons2 = [
     [
-        InlineKeyboardButton("Predictor 🚀", callback_data="buat_bot"),
+        InlineKeyboardButton("Predictor 🚀", callback_data="get_payment"),
     ],
     [
         InlineKeyboardButton("📎 Link Daftar", url="https://suara89.info/biqz"),
