@@ -58,7 +58,7 @@ async def _(_, query: CallbackQuery):
             [
                 [
                     InlineKeyboardButton(text="👨‍💻 Admin", user_id=6677920913),
-                ]
+                ],
                 [
                     InlineKeyboardButton(
                         "Back", callback_data="back_start"),
