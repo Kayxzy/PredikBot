@@ -127,7 +127,7 @@ async def back_start_bc(c, callback_query: CallbackQuery):
 
         
     
-@app.on_callback_query(filters.regex("get_prediction"))
+@bot.on_callback_query(filters.regex("get_prediction"))
 async def get_another_prediction(_, callback_query):
     user_id = callback_query.from_user.id# Mendapatkan ID pengguna
     seller = await seller_info(user_id)  # Hanya menggunakan user_id untuk memeriksa seller
@@ -148,7 +148,8 @@ async def get_another_prediction(_, callback_query):
 
     # Memperbarui waktu terakhir digunakan
     last_used[user_id] = current_time
-
+    x = await callback_query.message.reply_text("`Tunggu Sebentar...`")
+    await asyncio.sleep(2)
     bar = random.choice(selections)  # Memilih prediksi baru
     
     # Mendapatkan waktu saat ini dan menambahkannya 7 jam untuk WIB, lalu menambah 1 menit
