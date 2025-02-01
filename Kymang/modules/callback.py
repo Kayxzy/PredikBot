@@ -50,6 +50,23 @@ async def _(_, query: CallbackQuery):
         ),
     )
 
+@bot.on_callback_query(filters.regex("get_payment"))
+async def _(_, query: CallbackQuery):
+    return await query.edit_message_text(
+        "**Untuk mengakses bot ini, Anda perlu melakukan pembayaran.**\n**Untuk pembayaran, hubungi Admin dibawah.**")
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(text="👨‍💻 Admin", url="t.me/),
+                ]
+                [
+                    InlineKeyboardButton(
+                        "Back", callback_data="back_start"),
+                ],
+            ]
+        ),
+    )
+
 
 @bot.on_callback_query(filters.regex("cb_about"))
 async def _(c: Client, query: CallbackQuery):
