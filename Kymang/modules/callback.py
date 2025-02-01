@@ -150,18 +150,30 @@ async def buat_bot(c, callback_query: CallbackQuery):
     # Memperbarui waktu terakhir digunakan
     last_used[user_id] = current_time
 
-    bar = random.choice(selections)  # Memilih prediksi baru
+    # Mengirim pesan bahwa bot sedang memproses
+    x = await m.reply_text("`Tunggu Sebentar...`")
+    await asyncio.sleep(2)
+    
+    # Memilih prediksi secara acak
+    bar = random.choice(selections)
     
     # Mendapatkan waktu saat ini dan menambahkannya 7 jam untuk WIB, lalu menambah 1 menit
     wib_time = datetime.now() + timedelta(hours=7, minutes=1)
     formatted_time = wib_time.strftime("%H:%M")  # Format jam:menit
 
-    # Mengedit pesan dengan prediksi baru dan waktu yang diprediksi
-    await callback_query.edit_message_text(
-        text=f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}",
-        reply_markup=InlineKeyboardMarkup(buttons2),
-    )# Pastikan buttons2 adalah list dari InlineKeyboardButton
+    # Membuat tombol inline
+    reply_markup = InlineKeyboardMarkup([
+        [InlineKeyboardButton("Dapatkan Lagi", callback_data="buat_ubot")],
+        [InlineKeyboardButton("Batal", callback_data="cancel")]
+    ])
     
+    # Mengedit pesan sebelumnya untuk menghapus pesan "Tunggu Sebentar..."
+    await x.delete()
+
+    # Mengirim prediksi dan waktu yang diprediksi
+    await m.reply_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", reply_markup=reply_markup)
+
+
     
 @bot.on_callback_query(filters.regex("support"))
 async def _(c, callback_query: CallbackQuery):
