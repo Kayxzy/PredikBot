@@ -96,8 +96,8 @@ async def predik(c, m):
     # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
     if user_id in last_used:
         time_diff = current_time - last_used[user_id]
-        if time_diff < timedelta(seconds=10):
-            remaining_time = 10 - time_diff.seconds
+        if time_diff < timedelta(seconds=5):
+            remaining_time = 5 - time_diff.seconds
             await m.reply_text(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
             return
 
