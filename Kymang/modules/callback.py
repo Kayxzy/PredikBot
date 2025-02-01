@@ -23,7 +23,7 @@ from .start import (
 
 lonte = []
 # Daftar pilihan untuk prediksi
-selections = [f"Semoga Anda Beruntung **✗ {i} 🚀 🚀**" for i in range(1, 101)]
+selections = [f"Semoga Anda Beruntung **✗ {i} 🚀 🚀**" for i in range(1, 30)]
 
 # Dictionary untuk menyimpan waktu terakhir pengguna menggunakan perintah
 last_used = {}
@@ -155,8 +155,8 @@ async def get_another_prediction(_, callback_query):
     # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
     if user_id in last_used:
         time_diff = current_time - last_used[user_id]
-        if time_diff < timedelta(seconds=10):
-            remaining_time = 10 - time_diff.seconds
+        if time_diff < timedelta(seconds=5):
+            remaining_time = 5 - time_diff.seconds
             await callback_query.answer(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
             return
 
