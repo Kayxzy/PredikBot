@@ -84,15 +84,15 @@ async def start_bot(c, m):
 
 @bot.on_message(filters.command("predik"))
 async def predik(c, m):
-    user_id = m.from_user.id
-    seller = await seller_info(user_id)  # Hanya menggunakan user_id untuk memeriksa seller
-
-    # Cek apakah pengguna adalah seller
-    if not seller:
-        await m.reply("**Untuk mengakses fitur Premium ini, Anda perlu meminta akses melalui admin.**\n**Silakan hubungi admin di menu /start**",
-            reply_markup=InlineKeyboardMarkup(buttons2),
+    if c.me.id == BOT_ID:
+        await add_user(c.me.id, m.from_user.id)
+        await m.reply(
+            text=f"**Untuk mengakses fitur Premium ini, Anda perlu meminta akses melalui admin.**\n**Silakan hubungi admin di menu /start**",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("Predictor 🚀", callback_data="get_prediction")]
+                [InlineKeyboardButton("👨‍💻 Admin", callback_data="cb_admines"),],
+            ]),
         )
-        return          
     
 
         
