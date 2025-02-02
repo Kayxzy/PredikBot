@@ -183,8 +183,8 @@ async def support(c, callback_query: CallbackQuery):
     user_id = int(callback_query.from_user.id)
     full_name = f"{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}"
     
-    if user_ids in current_tasks:
-        current_tasks[user_ids].cancel()  # Batalkan task yang sedang berjalan
+    if user_id in current_tasks:
+        current_tasks[user_id].cancel()  # Batalkan task yang sedang berjalan
         del current_tasks[user_ids] 
         
     try:
