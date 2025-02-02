@@ -87,10 +87,10 @@ async def predik(c, m):
     if c.me.id == BOT_ID:
         await add_user(c.me.id, m.from_user.id)
         await m.reply(
-            text=f"**Untuk mengakses fitur Premium ini, Anda perlu meminta akses melalui admin.**\n**Silakan hubungi admin di menu /start**",
+            text="**Untuk mengakses fitur Premium ini, Anda perlu meminta akses melalui admin.**\n**Silakan hubungi admin di menu /start**",
             reply_markup=InlineKeyboardMarkup([
-                [InlineKeyboardButton("Predictor 🚀", callback_data="get_prediction")]
-                [InlineKeyboardButton("👨‍💻 Admin", callback_data="cb_admines"),],
+                [InlineKeyboardButton("Predictor 🚀", callback_data="get_prediction")],
+                [InlineKeyboardButton("👨‍💻 Admin", callback_data="cb_admines")],
             ]),
         )
     
