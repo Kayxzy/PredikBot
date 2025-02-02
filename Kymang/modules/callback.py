@@ -175,11 +175,13 @@ async def get_another_prediction(_, callback_query):
         [InlineKeyboardButton("Coba Lagi", callback_data="get_prediction")],
         [InlineKeyboardButton("Back", callback_data="back_start")]
     ]))
-    
+
+
 @bot.on_callback_query(filters.regex("support"))
-async def _(c, callback_query: CallbackQuery):
+async def support(c, callback_query: CallbackQuery):
     user_id = int(callback_query.from_user.id)
     full_name = f"{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}"
+    
     try:
         buttons = [
             [InlineKeyboardButton("❌ Batal", callback_data=f"batal {user_id}")]
@@ -195,24 +197,17 @@ async def _(c, callback_query: CallbackQuery):
         )
         await callback_query.message.delete()
     except asyncio.TimeoutError:
-        return await c.send_message(user_id, "**Pembatalan otomatis**")
-    button = [
-        [
-            InlineKeyboardButton(full_name, user_id=user_id),
-            InlineKeyboardButton("💌 Jawab", callback_data=f"jawab_pesan {user_id}"),
-        ],
-    ]
-    await pesan.copy(
-        LOG_GRP,
-        reply_markup=InlineKeyboardMarkup(button),
-    )
+        await c.send_message(user_id, "**Pembatalan otomatis**")
+    except Exception as e:
+        await c.send_message(user_id, f"**Terjadi kesalahan: {str(e)}**")
 
 
 @bot.on_callback_query(filters.regex("jawab_pesan"))
-async def _(c, callback_query: CallbackQuery):
+async def jawab_pesan(c, callback_query: CallbackQuery):
     user_id = int(callback_query.from_user.id)
     user_ids = int(callback_query.data.split()[1])
     full_name = f"{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}"
+
     if user_ids == LOG_GRP:
         try:
             button = [
@@ -230,42 +225,12 @@ async def _(c, callback_query: CallbackQuery):
             )
             await callback_query.message.delete()
         except asyncio.TimeoutError:
-            return await c.send_message(user_id, "**❌ Pembatalkan otomatis**")
-        buttons = [
-            [
-                InlineKeyboardButton(full_name, user_id=user_id),
-                InlineKeyboardButton("Jawab", callback_data=f"jawab_pesan {user_id}"),
-            ],
-        ]
+            await c.send_message(user_id, "**❌ Pembatalan otomatis**")
+        except Exception as e:
+            await c.send_message(user_id, f"**Terjadi kesalahan: {str(e)}**")
     else:
-        try:
-            button = [
-                [InlineKeyboardButton("Batal", callback_data=f"batal {LOG_GRP}")]
-            ]
-            pesan = await c.ask(
-                LOG_GRP,
-                "💌 Silahkan Kirimkan Balasan Anda.",
-                reply_markup=InlineKeyboardMarkup(button),
-                timeout=60,
-            )
-            await c.send_message(
-                LOG_GRP,
-                "✅ Pesan Anda Telah Dikirim Ke User, Silahkan Tunggu Balasannya",
-            )
-            await callback_query.message.delete()
-        except asyncio.TimeoutError:
-            return await c.send_message(LOG_GRP, "**Pembatalkan otomatis**")
-        buttons = [
-            [
-                InlineKeyboardButton("💌 Jawab", callback_data=f"jawab_pesan {LOG_GRP}"),
-            ],
-        ]
-
-    await pesan.copy(
-        user_ids,
-        reply_markup=InlineKeyboardMarkup(buttons),
-    )
-
+        # Logika untuk menangani balasan ke pengguna lain
+        pass
 
 @bot.on_callback_query(filters.regex("batal"))
 async def _(client, callback_query: CallbackQuery):
