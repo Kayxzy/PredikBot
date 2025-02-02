@@ -157,7 +157,7 @@ async def get_another_prediction(_, callback_query):
         time_diff = current_time - last_used[user_id]
         if time_diff < timedelta(seconds=5):
             remaining_time = 5 - time_diff.seconds
-            await callback_query.answer(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
+            await callback_query.message.edit(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
             return
 
     # Memperbarui waktu terakhir digunakan
@@ -167,14 +167,13 @@ async def get_another_prediction(_, callback_query):
     # Mendapatkan waktu saat ini dan menambahkannya 7 jam untuk WIB, lalu menambah 1 menit
     wib_time = datetime.now() + timedelta(hours=7, minutes=1)
     formatted_time = wib_time.strftime("%H:%M")  # Format jam:menit
-    reply_markup = InlineKeyboardMarkup([
+    
+    # Mengedit pesan dengan prediksi baru dan waktu yang diprediksi
+    await callback_query.message.edit_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", 
+        reply_markup = InlineKeyboardMarkup([
         [InlineKeyboardButton("Coba Lagi", callback_data="get_prediction")],
         [InlineKeyboardButton("Back", callback_data="back_start")]
     ])
-    # Mengedit pesan dengan prediksi baru dan waktu yang diprediksi
-    await callback_query.message.edit_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", reply_markup=callback_query.message.reply_markup)
-
-
     
 @bot.on_callback_query(filters.regex("support"))
 async def _(c, callback_query: CallbackQuery):
