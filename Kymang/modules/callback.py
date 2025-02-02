@@ -199,6 +199,9 @@ async def support(client, callback_query: CallbackQuery):
         )
         current_tasks[user_id] = asyncio.current_task()  # Simpan task yang sedang berjalan
         await client.send_message(
+            LOG_GRP, f"Pesan dari {user_id}: {pesan.text}"
+        )
+        await client.send_message(
             user_id, "✅ Pesan Anda Telah Dikirim Ke Admin, Silahkan Tunggu Balasannya"
         )
         await callback_query.message.delete()
