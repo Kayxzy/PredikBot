@@ -173,7 +173,7 @@ async def get_another_prediction(_, callback_query):
         reply_markup = InlineKeyboardMarkup([
         [InlineKeyboardButton("Coba Lagi", callback_data="get_prediction")],
         [InlineKeyboardButton("Back", callback_data="back_start")]
-    ])
+    ]))
     
 @bot.on_callback_query(filters.regex("support"))
 async def _(c, callback_query: CallbackQuery):
