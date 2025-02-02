@@ -58,6 +58,16 @@ sᴀʏᴀ ᴀᴅᴀʟᴀʜ {}​
 sɪʟᴀʜᴋᴀɴ ᴋʟɪᴋ ᴛᴏᴍʙᴏʟ ᴅɪʙᴀᴡᴀʜ ɪɴɪ ᴜɴᴛᴜᴋ ᴍᴇᴍᴜʟᴀɪɴʏᴀ**
 """
 
+note_msg = """
+**NOTE** : Tidak ada jaminan 100% akurat !!!
+
+ jangan paksakan pola apabila tebakan kurang tepat feeling lebih di utamakan dalam spaceman
+
+Main di link yang gua kirim dan mengacu zona waktu **WIB** yang lain bisa mengikuti.
+           
+
+**JANGAN GEGEBAH FULL AMBIL KALI GEDE , SEKIRA NYA UDAH CUKUP LANGSUNG CAIRIN JANGAN SAMPE LO NYESEL KALO DIA TIBA TIBA NABRAK !!**
+"""
 
 buttons2 = [
     [
@@ -87,12 +97,8 @@ async def predik(c, m):
     if c.me.id == BOT_ID:
         await add_user(c.me.id, m.from_user.id)
         await m.reply(
-            text="""
-            **NOTE** : Tidak ada jaminan 100% akurat !!!
-           jangan paksakan pola apabila tebakan kurang tepat feeling lebih di utamakan dalam spaceman
-           main di link yang gua kirim dan mengacu zona waktu WIB yang lain bisa mengikuti
-           JANGAN GEGEBAH FULL AMBIL KALI GEDE , SEKIRA NYA UDAH CUKUP LANGSUNG CAIRIN JANGAN SAMPE LO NYESEL KALO DIA TIBA TIBA NABRAK !!""",
-                reply_markup=InlineKeyboardMarkup([
+            note_msg,
+            reply_markup=InlineKeyboardMarkup([
                 [InlineKeyboardButton("Predictor 🚀", callback_data="get_prediction")],
                 [InlineKeyboardButton("👨‍💻 Admin", callback_data="cb_admines")],
             ]),
