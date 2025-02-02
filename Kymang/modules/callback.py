@@ -212,13 +212,13 @@ async def support(client, callback_query: CallbackQuery):
 
 @bot.on_callback_query(filters.regex("jawab_pesan"))
 async def jawab_pesan(client, callback_query: CallbackQuery):
-    user_id = int(callback_query.from_user.id)
-    user_ids = int(callback_query.data.split()[1])
+    user_id = int(callback_query.from_user.id)  # ID admin yang mengklik tombol
+    user_ids = int(callback_query.data.split()[1])  # ID pengguna yang akan dibalas
     full_name = f"{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}"
 
     if user_ids == LOG_GRP:
-    try:
-        button = [
+        try:
+            button = [
             [InlineKeyboardButton("Batal", callback_data=f"batal {user_id}")],
             [InlineKeyboardButton("Jawab", callback_data=f"jawab {user_id}")]  # Tombol jawab ditambahkan
         ]
@@ -245,8 +245,10 @@ async def jawab_pesan(client, callback_query: CallbackQuery):
         await client.send_message(user_id, f"**Terjadi kesalahan: {str(e)}**")
 else:
     # Logika untuk menangani balasan ke pengguna lain
-    passs
+    pass
 
+
+    
 @bot.on_callback_query(filters.regex("batal"))
 async def cancel(client, callback_query: CallbackQuery):
     user_ids = int(callback_query.data.split()[1])
