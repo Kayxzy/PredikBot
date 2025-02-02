@@ -87,7 +87,7 @@ async def predik(c, m):
     if c.me.id == BOT_ID:
         await add_user(c.me.id, m.from_user.id)
         await m.reply(
-            text=("""
+            text="""
             **NOTE** : Tidak ada jaminan 100% akurat !!!
            jangan paksakan pola apabila tebakan kurang tepat feeling lebih di utamakan dalam spaceman
            main di link yang gua kirim dan mengacu zona waktu WIB yang lain bisa mengikuti
