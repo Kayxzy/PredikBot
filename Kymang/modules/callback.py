@@ -179,7 +179,7 @@ async def get_another_prediction(_, callback_query):
 
 
 @bot.on_callback_query(filters.regex("support"))
-async def support(c, callback_query: CallbackQuery):
+async def support(client, callback_query: CallbackQuery):
     user_id = int(callback_query.from_user.id)
     
     # Jika ada task yang sedang berjalan, batalkan
@@ -208,7 +208,7 @@ async def support(c, callback_query: CallbackQuery):
         await client.send_message(user_id, f"**Terjadi kesalahan: {str(e)}**")
 
 @bot.on_callback_query(filters.regex("jawab_pesan"))
-async def jawab_pesan(c, callback_query: CallbackQuery):
+async def jawab_pesan(client, callback_query: CallbackQuery):
     user_id = int(callback_query.from_user.id)
     user_ids = int(callback_query.data.split()[1])
     full_name = f"{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}"
