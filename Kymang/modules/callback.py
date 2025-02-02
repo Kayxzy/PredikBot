@@ -181,7 +181,9 @@ async def get_another_prediction(_, callback_query):
 @bot.on_callback_query(filters.regex("support"))
 async def support(client, callback_query: CallbackQuery):
     user_id = int(callback_query.from_user.id)
-    
+    user_ids = int(callback_query.data.split()[1])
+    full_name = f"{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}"
+
     # Jika ada task yang sedang berjalan, batalkan
     if user_id in current_tasks:
         current_tasks[user_id].cancel()
@@ -199,7 +201,7 @@ async def support(client, callback_query: CallbackQuery):
         )
         current_tasks[user_id] = asyncio.current_task()  # Simpan task yang sedang berjalan
         await client.send_message(
-            LOG_GRP, f"Pesan dari {user_id}: {pesan.text}"
+            LOG_GRP, f"Pesan dari {full_name} {user_id}: {pesan.text}"
         )
         await client.send_message(
             user_id, "✅ Pesan Anda Telah Dikirim Ke Admin, Silahkan Tunggu Balasannya"
@@ -213,41 +215,63 @@ async def support(client, callback_query: CallbackQuery):
 @bot.on_callback_query(filters.regex("jawab_pesan"))
 async def jawab_pesan(client, callback_query: CallbackQuery):
     user_id = int(callback_query.from_user.id)
-    
-    
-    if user_id in current_tasks:
-        current_tasks[user_id].cancel()
-        del current_tasks[user_id]
-        
-        
-    try:
-        button = [
-                [InlineKeyboardButton("Batal", callback_data=f"batal {user_id}")],
-                [InlineKeyboardButton("Jawab", callback_data=f"jawab {user_id}")]  # Tombol jawab ditambahkan
-        ]
-        # Minta admin untuk mengirimkan balasan
-        pesan = await client.ask(
+    user_ids = int(callback_query.data.split()[1])
+    full_name = f"{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}"
+
+    if user_ids == LOG_GRP:
+        try:
+            button = [
+                [InlineKeyboardButton("Batal", callback_data=f"batal {user_id}")]
+            ]
+            pesan = await client.ask(
                 user_id,
                 "Silahkan Kirimkan Balasan Anda.",
                 reply_markup=InlineKeyboardMarkup(button),
                 timeout=60,
             )
-            # Kirim balasan ke pengguna
-        await client.send_message(
-            user_ids,  # Kirim ke pengguna yang bersangkutan
-            f"Balasan dari Admin ({full_name}): {pesan.text}"
-        )
-        await client.send_message(
-            user_id,
-            "✅ Pesan Anda Telah Dikirim Ke Pengguna, Silahkan Tunggu Balasannya",
-        )
-        await callback_query.message.delete()
-    except asyncio.TimeoutError:
-        await client.send_message(user_id, "**❌ Pembatalan otomatis**")
-    except Exception as e:
-        await client.send_message(user_id, f"**Terjadi kesalahan: {str(e)}**")
+            await client.send_message(
+                user_id,
+                "✅ Pesan Anda Telah Dikirim Ke Admin, Silahkan Tunggu Balasannya",
+            )
+            await callback_query.message.delete()
+        except asyncio.TimeoutError:
+            return await client.send_message(user_id, "**❌ Pembatalkan otomatis**")
+        
+        buttons = [
+            [
+                InlineKeyboardButton(full_name, user_id=user_id),
+                InlineKeyboardButton("Jawab", callback_data=f"jawab_pesan {user_id}"),
+            ],
+        ]
+    else:
+        try:
+            button = [
+                [InlineKeyboardButton("Batal", callback_data=f"batal {LOG_GRP}")]
+            ]
+            pesan = await client.ask(
+                LOG_GRP,
+                "💌 Silahkan Kirimkan Balasan Anda.",
+                reply_markup=InlineKeyboardMarkup(button),
+                timeout=60,
+            )
+            await client.send_message(
+                LOG_GRP,
+                "✅ Pesan Anda Telah Dikirim Ke User, Silahkan Tunggu Balasannya",
+            )
+            await callback_query.message.delete()
+        except asyncio.TimeoutError:
+            return await client.send_message(LOG_GRP, "**Pembatalan otomatis**")
+        
+        buttons = [
+            [
+                InlineKeyboardButton("💌 Jawab", callback_data=f"jawab_pesan {LOG_GRP}"),
+            ],
+        ]
 
-    
+    await pesan.copy(
+        user_ids,
+        reply_markup=InlineKeyboardMarkup(buttons),
+    )
         
     
 @bot.on_callback_query(filters.regex("batal"))
