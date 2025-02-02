@@ -221,7 +221,6 @@ async def support(c, callback_query: CallbackQuery):
 @bot.on_callback_query(filters.regex("jawab_pesan"))
 async def jawab_pesan(c, callback_query: CallbackQuery):
     user_id = int(callback_query.from_user.id)
-    user_ids = int(callback_query.data.split()[1])
     full_name = f"{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}"
     
     if user_ids in current_tasks:
@@ -239,8 +238,6 @@ async def jawab_pesan(c, callback_query: CallbackQuery):
                 reply_markup=InlineKeyboardMarkup(button),
                 timeout=60,
             )
-            current_tasks[user_id] = asyncio.current_task()  # Simpan task yang sedang berjalan
-        
             await c.send_message(
                 user_id,
                 "✅ Pesan Anda Telah Dikirim Ke Admin, Silahkan Tunggu Balasannya",
