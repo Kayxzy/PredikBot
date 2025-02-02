@@ -169,7 +169,7 @@ async def get_another_prediction(_, callback_query):
     formatted_time = wib_time.strftime("%H:%M")  # Format jam:menit
     reply_markup = InlineKeyboardMarkup([
         [InlineKeyboardButton("Coba Lagi", callback_data="get_prediction")],
-        [InlineKeyboardButton("Batal", callback_data="cancel")]
+        [InlineKeyboardButton("Back", callback_data="back_start")]
     ])
     # Mengedit pesan dengan prediksi baru dan waktu yang diprediksi
     await callback_query.message.edit_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", reply_markup=callback_query.message.reply_markup)
