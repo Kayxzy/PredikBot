@@ -233,17 +233,20 @@ async def jawab_pesan(c, callback_query: CallbackQuery):
         pass
 
 @bot.on_callback_query(filters.regex("batal"))
-async def _(client, callback_query: CallbackQuery):
+async def cancel(client, callback_query: CallbackQuery):
     user_ids = int(callback_query.data.split()[1])
+    
+    if user_ids in current_tasks:
+        current_tasks[user_ids].cancel()  # Batalkan task yang sedang berjalan
+        del current_tasks[user_ids]  # Hapus referensi task yang dibatalkan
+
     if user_ids == LOG_GRP:
-        client.cancel_listener(LOG_GRP)
         await client.send_message(LOG_GRP, "**❌ Pesan di batalkan**")
     else:
-        client.cancel_listener(user_ids)
         await client.send_message(user_ids, "**❌ Pesan di batalkan**")
+    
     await callback_query.message.delete()
     return True
-
 
 @bot.on_callback_query(filters.regex("bck_cb"))
 async def _(c, query: CallbackQuery):
