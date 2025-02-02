@@ -219,8 +219,8 @@ async def jawab_pesan(client, callback_query: CallbackQuery):
     if user_ids == LOG_GRP:
         try:
             button = [
-            [InlineKeyboardButton("Batal", callback_data=f"batal {user_id}")],
-            [InlineKeyboardButton("Jawab", callback_data=f"jawab {user_id}")]  # Tombol jawab ditambahkan
+                [InlineKeyboardButton("Batal", callback_data=f"batal {user_id}")],
+                [InlineKeyboardButton("Jawab", callback_data=f"jawab {user_id}")]  # Tombol jawab ditambahkan
         ]
         # Minta admin untuk mengirimkan balasan
         pesan = await client.ask(
