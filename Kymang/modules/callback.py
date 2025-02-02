@@ -180,27 +180,31 @@ async def get_another_prediction(_, callback_query):
 @bot.on_callback_query(filters.regex("support"))
 async def support(c, callback_query: CallbackQuery):
     user_id = int(callback_query.from_user.id)
-    full_name = f"{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}"
     
+    # Jika ada task yang sedang berjalan, batalkan
+    if user_id in current_tasks:
+        current_tasks[user_id].cancel()
+        del current_tasks[user_id]  # Hapus referensi task yang dibatalkan
+
     try:
         buttons = [
             [InlineKeyboardButton("❌ Batal", callback_data=f"batal {user_id}")]
         ]
-        pesan = await c.ask(
+        pesan = await client.ask(
             user_id,
             "Kirimkan Pesan Anda, Admin akan membalas Pesan anda secepatnya.",
             reply_markup=InlineKeyboardMarkup(buttons),
             timeout=60,
         )
-        await c.send_message(
+        current_tasks[user_id] = asyncio.current_task()  # Simpan task yang sedang berjalan
+        await client.send_message(
             user_id, "✅ Pesan Anda Telah Dikirim Ke Admin, Silahkan Tunggu Balasannya"
         )
         await callback_query.message.delete()
     except asyncio.TimeoutError:
-        await c.send_message(user_id, "**Pembatalan otomatis**")
+        await client.send_message(user_id, "**Pembatalan otomatis**")
     except Exception as e:
-        await c.send_message(user_id, f"**Terjadi kesalahan: {str(e)}**")
-
+        await client.send_message(user_id, f"**Terjadi kesalahan: {str(e)}**")
 
 @bot.on_callback_query(filters.regex("jawab_pesan"))
 async def jawab_pesan(c, callback_query: CallbackQuery):
