@@ -61,11 +61,10 @@ sɪʟᴀʜᴋᴀɴ ᴋʟɪᴋ ᴛᴏᴍʙᴏʟ ᴅɪʙᴀᴡᴀʜ ɪɴɪ ᴜɴ�
 note_msg = """
 **NOTE** : Tidak ada jaminan 100% akurat !!!
 
- jangan paksakan pola apabila tebakan kurang tepat feeling lebih di utamakan dalam spaceman
+jangan paksakan pola apabila tebakan kurang tepat feeling lebih di utamakan dalam spaceman
 
 Main di link yang gua kirim dan mengacu zona waktu **WIB** yang lain bisa mengikuti.
            
-
 **JANGAN GEGEBAH FULL AMBIL KALI GEDE , SEKIRA NYA UDAH CUKUP LANGSUNG CAIRIN JANGAN SAMPE LO NYESEL KALO DIA TIBA TIBA NABRAK !!**
 """
 
