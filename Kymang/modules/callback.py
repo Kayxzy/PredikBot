@@ -246,9 +246,7 @@ async def jawab_pesan(client, callback_query: CallbackQuery):
         await client.send_message(user_id, "**❌ Pembatalan otomatis**")
     except Exception as e:
         await client.send_message(user_id, f"**Terjadi kesalahan: {str(e)}**")
-else:
-    # Logika untuk menangani balasan ke pengguna lain
-    pass
+
     
         
     
