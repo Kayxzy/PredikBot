@@ -223,7 +223,7 @@ async def jawab_pesan(client, callback_query: CallbackQuery):
             [InlineKeyboardButton("Jawab", callback_data=f"jawab {user_id}")]  # Tombol jawab ditambahkan
         ]
         # Minta admin untuk mengirimkan balasan
-        pesan = await client.ask(
+            pesan = await client.ask(
             user_id,
             "Silahkan Kirimkan Balasan Anda.",
             reply_markup=InlineKeyboardMarkup(button),
@@ -246,8 +246,6 @@ async def jawab_pesan(client, callback_query: CallbackQuery):
 else:
     # Logika untuk menangani balasan ke pengguna lain
     pass
-
-
     
 @bot.on_callback_query(filters.regex("batal"))
 async def cancel(client, callback_query: CallbackQuery):
