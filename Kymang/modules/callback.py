@@ -217,28 +217,35 @@ async def jawab_pesan(client, callback_query: CallbackQuery):
     full_name = f"{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}"
 
     if user_ids == LOG_GRP:
-        try:
-            button = [
-                [InlineKeyboardButton("Batal", callback_data=f"batal {user_id}")]
-            ]
-            pesan = await c.ask(
-                user_id,
-                "Silahkan Kirimkan Balasan Anda.",
-                reply_markup=InlineKeyboardMarkup(button),
-                timeout=60,
-            )
-            await c.send_message(
-                user_id,
-                "✅ Pesan Anda Telah Dikirim Ke Admin, Silahkan Tunggu Balasannya",
-            )
-            await callback_query.message.delete()
-        except asyncio.TimeoutError:
-            await c.send_message(user_id, "**❌ Pembatalan otomatis**")
-        except Exception as e:
-            await c.send_message(user_id, f"**Terjadi kesalahan: {str(e)}**")
-    else:
-        # Logika untuk menangani balasan ke pengguna lain
-        pass
+    try:
+        button = [
+            [InlineKeyboardButton("Batal", callback_data=f"batal {user_id}")],
+            [InlineKeyboardButton("Jawab", callback_data=f"jawab {user_id}")]  # Tombol jawab ditambahkan
+        ]
+        # Minta admin untuk mengirimkan balasan
+        pesan = await client.ask(
+            user_id,
+            "Silahkan Kirimkan Balasan Anda.",
+            reply_markup=InlineKeyboardMarkup(button),
+            timeout=60,
+        )
+        # Kirim balasan ke pengguna
+        await client.send_message(
+            user_ids,  # Kirim ke pengguna yang bersangkutan
+            f"Balasan dari Admin ({full_name}): {pesan.text}"
+        )
+        await client.send_message(
+            user_id,
+            "✅ Pesan Anda Telah Dikirim Ke Pengguna, Silahkan Tunggu Balasannya",
+        )
+        await callback_query.message.delete()
+    except asyncio.TimeoutError:
+        await client.send_message(user_id, "**❌ Pembatalan otomatis**")
+    except Exception as e:
+        await client.send_message(user_id, f"**Terjadi kesalahan: {str(e)}**")
+else:
+    # Logika untuk menangani balasan ke pengguna lain
+    passs
 
 @bot.on_callback_query(filters.regex("batal"))
 async def cancel(client, callback_query: CallbackQuery):
