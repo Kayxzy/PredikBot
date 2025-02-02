@@ -185,7 +185,7 @@ async def support(c, callback_query: CallbackQuery):
     
     if user_id in current_tasks:
         current_tasks[user_id].cancel()  # Batalkan task yang sedang berjalan
-        del current_tasks[user_ids] 
+        del current_tasks[user_id] 
         
     try:
         buttons = [
