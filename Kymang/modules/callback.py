@@ -212,7 +212,7 @@ async def support(client, callback_query: CallbackQuery):
         await client.send_message(user_id, f"**Terjadi kesalahan: {str(e)}**")
 
 @bot.on_callback_query(filters.regex("jawab_pesan"))
-async def jawab_pesan(client, callback_query: CallbackQuery):
+async def jawab_pesan(c, callback_query: CallbackQuery):
     user_id = int(callback_query.from_user.id)
     user_ids = int(callback_query.data.split()[1])
     full_name = f"{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}"
@@ -222,19 +222,19 @@ async def jawab_pesan(client, callback_query: CallbackQuery):
             button = [
                 [InlineKeyboardButton("Batal", callback_data=f"batal {user_id}")]
             ]
-            pesan = await client.ask(
+            pesan = await c.ask(
                 user_id,
                 "Silahkan Kirimkan Balasan Anda.",
                 reply_markup=InlineKeyboardMarkup(button),
                 timeout=60,
             )
-            await client.send_message(
+            await c.send_message(
                 user_id,
                 "✅ Pesan Anda Telah Dikirim Ke Admin, Silahkan Tunggu Balasannya",
             )
             await callback_query.message.delete()
         except asyncio.TimeoutError:
-            return await client.send_message(user_id, "**❌ Pembatalkan otomatis**")
+            return await c.send_message(user_id, "**❌ Pembatalkan otomatis**")
         
         buttons = [
             [
@@ -247,19 +247,19 @@ async def jawab_pesan(client, callback_query: CallbackQuery):
             button = [
                 [InlineKeyboardButton("Batal", callback_data=f"batal {LOG_GRP}")]
             ]
-            pesan = await client.ask(
+            pesan = await c.ask(
                 LOG_GRP,
                 "💌 Silahkan Kirimkan Balasan Anda.",
                 reply_markup=InlineKeyboardMarkup(button),
                 timeout=60,
             )
-            await client.send_message(
+            await c.send_message(
                 LOG_GRP,
                 "✅ Pesan Anda Telah Dikirim Ke User, Silahkan Tunggu Balasannya",
             )
             await callback_query.message.delete()
         except asyncio.TimeoutError:
-            return await client.send_message(LOG_GRP, "**Pembatalan otomatis**")
+            return await c.send_message(LOG_GRP, "**Pembatalan otomatis**")
         
         buttons = [
             [
@@ -271,6 +271,7 @@ async def jawab_pesan(client, callback_query: CallbackQuery):
         user_ids,
         reply_markup=InlineKeyboardMarkup(buttons),
     )
+
         
     
 @bot.on_callback_query(filters.regex("batal"))
