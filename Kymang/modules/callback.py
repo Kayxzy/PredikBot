@@ -27,6 +27,7 @@ selections = [f"Semoga Anda Beruntung **✗ {i} 🚀 🚀**" for i in range(1, 3
 
 # Dictionary untuk menyimpan waktu terakhir pengguna menggunakan perintah
 last_used = {}
+current_tasks = {}
 
 logs = logging.getLogger(__name__)
 
