@@ -181,8 +181,8 @@ async def get_another_prediction(_, callback_query):
 @bot.on_callback_query(filters.regex("support"))
 async def support(c, callback_query: CallbackQuery):
     user_id = int(callback_query.from_user.id)
-    full_name = f"{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}"
     user_ids = int(callback_query.data.split()[1])
+    full_name = f"{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}"
     
     if user_ids in current_tasks:
         current_tasks[user_ids].cancel()  # Batalkan task yang sedang berjalan
