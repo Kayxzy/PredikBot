@@ -183,6 +183,10 @@ async def support(c, callback_query: CallbackQuery):
     user_id = int(callback_query.from_user.id)
     full_name = f"{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}"
     
+    if user_ids in current_tasks:
+        current_tasks[user_ids].cancel()  # Batalkan task yang sedang berjalan
+        del current_tasks[user_ids] 
+        
     try:
         buttons = [
             [InlineKeyboardButton("❌ Batal", callback_data=f"batal {user_id}")]
@@ -193,6 +197,8 @@ async def support(c, callback_query: CallbackQuery):
             reply_markup=InlineKeyboardMarkup(buttons),
             timeout=60,
         )
+        current_tasks[user_id] = asyncio.current_task()  # Simpan task yang sedang berjalan
+        
         await c.send_message(
             user_id, "✅ Pesan Anda Telah Dikirim Ke Admin, Silahkan Tunggu Balasannya"
         )
@@ -216,7 +222,11 @@ async def jawab_pesan(c, callback_query: CallbackQuery):
     user_id = int(callback_query.from_user.id)
     user_ids = int(callback_query.data.split()[1])
     full_name = f"{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}"
-
+    
+    if user_ids in current_tasks:
+        current_tasks[user_ids].cancel()  # Batalkan task yang sedang berjalan
+        del current_tasks[user_ids]
+        
     if user_ids == LOG_GRP:
         try:
             button = [
@@ -228,6 +238,8 @@ async def jawab_pesan(c, callback_query: CallbackQuery):
                 reply_markup=InlineKeyboardMarkup(button),
                 timeout=60,
             )
+            current_tasks[user_id] = asyncio.current_task()  # Simpan task yang sedang berjalan
+        
             await c.send_message(
                 user_id,
                 "✅ Pesan Anda Telah Dikirim Ke Admin, Silahkan Tunggu Balasannya",
@@ -253,6 +265,7 @@ async def jawab_pesan(c, callback_query: CallbackQuery):
                 reply_markup=InlineKeyboardMarkup(button),
                 timeout=60,
             )
+            current_tasks[user_id] = asyncio.current_task()  # Simpan task yang sedang berjalan
             await c.send_message(
                 LOG_GRP,
                 "✅ Pesan Anda Telah Dikirim Ke User, Silahkan Tunggu Balasannya",
