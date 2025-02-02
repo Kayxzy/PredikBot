@@ -61,7 +61,7 @@ sɪʟᴀʜᴋᴀɴ ᴋʟɪᴋ ᴛᴏᴍʙᴏʟ ᴅɪʙᴀᴡᴀʜ ɪɴɪ ᴜɴ�
 
 buttons2 = [
     [
-        InlineKeyboardButton("Predictor 🚀", callback_data="get_payment"),
+        InlineKeyboardButton("Predictor 🚀", callback_data="get_prediction"),
     ],
     [
         InlineKeyboardButton("📎 Link Daftar", url="https://suara89.info/biqz"),
@@ -89,44 +89,11 @@ async def predik(c, m):
 
     # Cek apakah pengguna adalah seller
     if not seller:
-        await m.reply_text("**Untuk mengakses fitur Premium ini, Anda perlu meminta akses melalui admin.**\n**Silakan hubungi admin di menu /start**")
-        return
-    current_time = datetime.now()
-
-    # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
-    if user_id in last_used:
-        time_diff = current_time - last_used[user_id]
-        if time_diff < timedelta(seconds=5):
-            remaining_time = 5 - time_diff.seconds
-            await m.reply_text(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
-            return
-
-    # Memperbarui waktu terakhir digunakan
-    last_used[user_id] = current_time
-
-    # Mengirim pesan bahwa bot sedang memproses
-    x = await m.reply_text("`Tunggu Sebentar...`")
-    await asyncio.sleep(2)
+        await m.reply("**Untuk mengakses fitur Premium ini, Anda perlu meminta akses melalui admin.**\n**Silakan hubungi admin di menu /start**",
+            reply_markup=InlineKeyboardMarkup(buttons2),
+        )
+        return          
     
-    # Memilih prediksi secara acak
-    bar = random.choice(selections)
-    
-    # Mendapatkan waktu saat ini dan menambahkannya 7 jam untuk WIB, lalu menambah 1 menit
-    wib_time = datetime.now() + timedelta(hours=7, minutes=1)
-    formatted_time = wib_time.strftime("%H:%M")  # Format jam:menit
-
-    # Membuat tombol inline
-    reply_markup = InlineKeyboardMarkup([
-        [InlineKeyboardButton("Dapatkan Lagi", callback_data="get_prediction")],
-        [InlineKeyboardButton("Batal", callback_data="cancel")]
-    ])
-    
-    # Mengedit pesan sebelumnya untuk menghapus pesan "Tunggu Sebentar..."
-    await x.delete()
-
-    # Mengirim prediksi dan waktu yang diprediksi
-    await m.reply_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", reply_markup=reply_markup)
-
 
         
 @bot.on_message(filters.command("restart") & filters.user(ADMINS))
