@@ -81,7 +81,7 @@ buttons2 = [
     ],
 ]
 
-@bot.on_message(filters.command("start"))
+@bot.on_message(filters.command("start") & filters.private))
 async def start_bot(c, m):
     if c.me.id == BOT_ID:
         await add_user(c.me.id, m.from_user.id)
@@ -91,7 +91,7 @@ async def start_bot(c, m):
         )
         return
 
-@bot.on_message(filters.command("predik"))
+@bot.on_message(filters.command("predik") & filters.private)
 async def predik(c, m):
     if c.me.id == BOT_ID:
         await add_user(c.me.id, m.from_user.id)
@@ -105,7 +105,7 @@ async def predik(c, m):
     
 
         
-@bot.on_message(filters.command("restart") & filters.user(ADMINS))
+@bot.on_message(filters.command("restart") & filters.private)
 async def restart_bot(c, m):
     try:
         update_message = await m.reply_text("🔄 Sedang memulai ulang bot....")
