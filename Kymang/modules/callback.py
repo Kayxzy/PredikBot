@@ -167,7 +167,7 @@ async def get_another_prediction(_, callback_query):
     # Mendapatkan waktu saat ini dan menambahkannya 7 jam untuk WIB, lalu menambah 1 menit
     wib_time = datetime.now() + timedelta(hours=7, minutes=1)
     formatted_time = wib_time.strftime("%H:%M")  # Format jam:menit
-    x = await msg.reply_text("`Tunggu Sebentar...`")
+    x = await message.reply_text("`Tunggu Sebentar...`")
     await asyncio.sleep(1)
     # Mengedit pesan dengan prediksi baru dan waktu yang diprediksi
     await callback_query.message.edit_text(f"{bar}\n\n**Waktu prediksi (WIB):** {formatted_time}", 
