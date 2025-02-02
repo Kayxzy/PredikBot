@@ -181,7 +181,6 @@ async def get_another_prediction(_, callback_query):
 @bot.on_callback_query(filters.regex("support"))
 async def support(client, callback_query: CallbackQuery):
     user_id = int(callback_query.from_user.id)
-    user_ids = int(callback_query.data.split()[1])
     full_name = f"{callback_query.from_user.first_name} {callback_query.from_user.last_name or ''}"
 
     # Jika ada task yang sedang berjalan, batalkan
