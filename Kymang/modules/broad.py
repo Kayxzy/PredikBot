@@ -203,12 +203,14 @@ async def list_sellers(c, m):
     for user_id in sellers:
         try:
             user = await bot.get_chat(user_id)  # Mengambil objek pengguna berdasarkan ID
-            seller_list.append(f"• {user.mention} (ID: {user_id})")  # Menggunakan mention
+            full_name = f"{user.first_name} {user.last_name}" if user.last_name else user.first_name
+            mention = f"[{full_name}](tg://user?id={user_id})"  # Format mention
+            seller_list.append(f"• {mention} (ID: {user_id})")  # Menggunakan mention dan ID
         except Exception as e:
-            seller_list.append(f"• {user.mention} (ID: {user_id})")  # Menangani kesalahan jika pengguna tidak ditemukan
+            seller_list.append(f"• User ID: {user_id} (tidak dapat diambil)")  # Menangani kesalahan jika pengguna tidak ditemukan
 
-    await m.reply(f"Daftar Premium:\n" + "\n".join(seller_list))
-    
+    await m.reply(f"Daftar Premium:\n" + "\n".join(seller_list), parse_mode='Markdown')
+
 
 @bot.on_message(filters.private & filters.command("protect"))
 async def set_protect(c, m):
