@@ -172,7 +172,7 @@ async def add_seller_sub(c, m):
         await m.reply(f"User {ids} Sudah menjadi seller")
 
 
-@bot.on_message(filters.command("dprem") & filters.user(ADMINS))
+@bot.on_message(filters.command("unprem") & filters.user(ADMINS))
 async def del_seller_sub(c, m):
     if c.me.id != BOT_ID:
         return
@@ -188,6 +188,20 @@ async def del_seller_sub(c, m):
     else:
         await m.reply(f"{ids} Bukan bagian dari seller")
 
+
+@bot.on_message(filters.command("dprem") & filters.user(ADMINS))
+async def list_sellers(c, m):
+    if c.me.id != BOT_ID:
+        return
+    
+    sellers = await cek_seller()
+    
+    if not sellers:
+        return await m.reply("Tidak ada seller yang terdaftar.")
+    
+    seller_list = "\n".join([f"User  ID: {user_id}" for user_id in sellers])
+    
+    await m.reply(f"Daftar Seller:\n{seller_list}")
 
 
 @bot.on_message(filters.private & filters.command("protect"))
