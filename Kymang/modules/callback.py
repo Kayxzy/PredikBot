@@ -154,7 +154,7 @@ async def get_another_prediction(c, callback_query):
         [InlineKeyboardButton("Coba Lagi", callback_data="get_prediction")],
         [InlineKeyboardButton("Back", callback_data="back_start")]
     ]))   
-    return
+    return pesan
     current_time = datetime.now()
     
     # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
