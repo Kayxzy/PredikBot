@@ -152,7 +152,7 @@ async def get_another_prediction(c, callback_query):
             "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**",
             reply_markup=InlineKeyboardMarkup([
                 InlineKeyboardButton("Back", callback_data="back_start")]
-            ])
+            )
         )
         return
     current_time = datetime.now()
