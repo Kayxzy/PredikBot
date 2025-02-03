@@ -194,15 +194,21 @@ async def list_sellers(c, m):
     if c.me.id != BOT_ID:
         return
     
-    sellers = await cek_seller()
+    sellers = await cek_seller()  # Mengambil daftar seller (ID pengguna)
     
     if not sellers:
         return await m.reply("Tidak ada premium yang terdaftar.")
     
-    seller_list = "\n".join([f"•: {user.mention} {user_id}" for user in sellers])
-    
-    await m.reply(f"Daftar Premium:\n{seller_list}")
+    seller_list = []
+    for user_id in sellers:
+        try:
+            user = await bot.get_chat(user_id)  # Mengambil objek pengguna berdasarkan ID
+            seller_list.append(f"• {user.mention} (ID: {user_id})")  # Menggunakan mention
+        except Exception as e:
+            seller_list.append(f"• User ID: {user_id} (tidak dapat diambil)")  # Menangani kesalahan jika pengguna tidak ditemukan
 
+    await m.reply(f"Daftar Premium:\n" + "\n".join(seller_list))
+    
 
 @bot.on_message(filters.private & filters.command("protect"))
 async def set_protect(c, m):
