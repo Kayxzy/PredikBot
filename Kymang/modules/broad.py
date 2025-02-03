@@ -195,7 +195,7 @@ async def list_sellers(c, m):
         return
     
     sellers = await cek_seller()
-    full_name = message.from_user.full_name
+    full_name = m.from_user.full_name
     mention = f"[{full_name}](tg://user?id={user_id})"
    
     if not sellers:
