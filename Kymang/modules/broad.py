@@ -205,10 +205,8 @@ async def list_sellers(c, m):
             user = await bot.get_chat(user_id)  # Mengambil objek pengguna berdasarkan ID
             full_name = f"{user.first_name} {user.last_name}" if user.last_name else user.first_name
             mention = user.mention  # Menggunakan mention dari objek pengguna
-            seller_list.append(f"• {mention} (ID: {user_id})")  # Menggunakan mention dan ID
-        except Exception as e:
-            seller_list.append(f"• User ID: {user_id} (tidak dapat diambil)")  # Menangani kesalahan jika pengguna tidak ditemukan
-
+            seller_list.append(f"• {mention} ID: {user_id}")  # Menggunakan mention dan ID
+        
     # Menggunakan mention untuk pengguna yang mengirim perintah
     user_mention = m.from_user.mention  # Mention pengguna yang mengirim perintah
 
