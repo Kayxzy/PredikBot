@@ -195,14 +195,11 @@ async def list_sellers(c, m):
         return
     
     sellers = await cek_seller()
-    user_id = m.from_user.id
-    full_name = m.from_user.full_name
-    mention = f"[{full_name}](tg://user?id={user_id})"
-   
+    
     if not sellers:
         return await m.reply("Tidak ada premium yang terdaftar.")
     
-    seller_list = "\n".join([f"User  ID: {full_name} (tg://user?id={user_id})" for user_id in sellers])
+    seller_list = "\n".join([f"•: {user.mention} {user_id}" for user_id in sellers])
     
     await m.reply(f"Daftar Premium:\n{seller_list}")
 
