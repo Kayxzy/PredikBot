@@ -148,7 +148,7 @@ async def get_another_prediction(c, callback_query):
     seller = await seller_info(user_id)  # Hanya menggunakan user_id untuk memeriksa seller
     
     if not seller:
-       await c.send_message(
+       await callback_query.message.edit(
             "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**",
            reply_markup = InlineKeyboardMarkup([
         [InlineKeyboardButton("Coba Lagi", callback_data="get_prediction")],
