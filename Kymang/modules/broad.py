@@ -161,15 +161,25 @@ async def add_seller_sub(c, m):
         return
     if len(m.command) < 2:
         return await m.reply(
-            "Balas pesan pengguna atau berikan user_id/username."
+            "Balas pesan pengguna atau berikan user_id/@username."
         )
-    ids = m.command[1]
-    iya = await seller_info(int(ids))
-    if not iya:
-        await add_seller(int(ids))
-        await m.reply(f"User {ids} Berhasil di tambahkan ke premium")
+    
+    user_input = m.command[1]
+    
+    # Check if the input is a username or user_id
+    if user_input.startswith('@'):
+        username = user_input[1:]  # Remove '@' to get the username
+        user = await c.get_users(username)
+        ids = user.id
     else:
-        await m.reply(f"User {ids} Sudah menjadi premium")
+        ids = int(user_input)  # Assume it's a user_id
+
+    iya = await seller_info(ids)
+    if not iya:
+        await add_seller(ids)
+        await m.reply(f"User  {ids} Berhasil di tambahkan ke premium")
+    else:
+        await m.reply(f"User  {ids} Sudah menjadi premium")
 
 
 @bot.on_message(filters.command("unprem") & filters.user(ADMINS))
@@ -178,12 +188,22 @@ async def del_seller_sub(c, m):
         return
     if len(m.command) < 2:
         return await m.reply(
-            "Balas pesan pengguna atau berikan user_id/username."
+            "Balas pesan pengguna atau berikan user_id/@username."
         )
-    ids = m.command[1]
-    iya = await seller_info(int(ids))
+    
+    user_input = m.command[1]
+    
+    # Check if the input is a username or user_id
+    if user_input.startswith('@'):
+        username = user_input[1:]  # Remove '@' to get the username
+        user = await c.get_users(username)
+        ids = user.id
+    else:
+        ids = int(user_input)  # Assume it's a user_id
+
+    iya = await seller_info(ids)
     if iya:
-        await del_seller(int(ids))
+        await del_seller(ids)
         await m.reply(f"{ids} Berhasil di hapus dari premium")
     else:
         await m.reply(f"{ids} Bukan bagian dari premium")
