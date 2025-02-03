@@ -205,15 +205,15 @@ async def list_sellers(c, m):
             user = await bot.get_chat(user_id)  # Mengambil objek pengguna berdasarkan ID
             full_name = f"{user.first_name} {user.last_name}" if user.last_name else user.first_name
             mention = user.mention  # Menggunakan mention dari objek pengguna
-            seller_list.append(f"• {mention} (ID: {user_id})")  # Menggunakan mention dan ID
+            seller_list.append(f"• {user_mention} (ID: {user_id})")  # Menggunakan mention dan ID
         except Exception as e:
-            seller_list.append(f"• (ID: {user_id})")  # Menangani kesalahan jika pengguna tidak ditemukan
+            seller_list.append(f"• {user_mention} (ID: {user_id})")  # Menangani kesalahan jika pengguna tidak ditemukan
 
     # Menggunakan mention untuk pengguna yang mengirim perintah
     user_mention = m.from_user.mention  # Mention pengguna yang mengirim perintah
 
     # Mengirim balasan dengan daftar seller
-    await m.reply(f"Daftar Premium {user_mention}:\n" + "\n".join(seller_list))
+    await m.reply(f"Daftar Premium\n" + "\n".join(seller_list))
  
 
 @bot.on_message(filters.private & filters.command("protect"))
