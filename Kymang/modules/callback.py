@@ -160,8 +160,8 @@ async def get_another_prediction(c, callback_query):
     # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
     if user_id in last_used:
         time_diff = current_time - last_used[user_id]
-        if time_diff < timedelta(seconds=5):
-            remaining_time = 5 - time_diff.seconds
+        if time_diff < timedelta(seconds=3):
+            remaining_time = 3 - time_diff.seconds
             await callback_query.message.edit(f"Silakan tunggu {remaining_time} detik sebelum menggunakan perintah ini lagi.")
             return
 
@@ -296,21 +296,7 @@ async def cancel(client, callback_query: CallbackQuery):
     await callback_query.message.delete()
     return True
 
-@bot.on_callback_query(filters.regex("bck_cb"))
-async def _(c, query: CallbackQuery):
-    buttons = await button_pas_pertama(c)
-    await query.message.edit(
-            f"**Hello {query.from_user.mention}**\n\n**Saya dapat menyimpan file di Channel Tertentu dan pengguna lain dapat mengaksesnya dari link khusus.**",
-            reply_markup=InlineKeyboardMarkup(buttons),
-    )
 
-
-@bot.on_callback_query(filters.regex("telah_aktif"))
-async def _(client, callback_query: CallbackQuery):
-    user_ids = int(callback_query.data.split()[1])
-    bot_user = callback_query.data.split()[2]
-    await client.send_message(user_ids, f"✅ Bot kamu telah aktif silahkan start bot @{bot_user}")
-    await callback_query.message.edit("**✅ Pesan telah di kirim**")
 
 
 @bot.on_callback_query(filters.regex("close"))
