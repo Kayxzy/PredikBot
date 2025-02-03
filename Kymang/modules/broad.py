@@ -209,7 +209,7 @@ async def list_sellers(c, m):
         except Exception as e:
             seller_list.append(f"• User ID: {user_id} (tidak dapat diambil)")  # Menangani kesalahan jika pengguna tidak ditemukan
 
-    await m.reply(f"Daftar Premium:\n" + "\n".join(seller_list), parse_mode='Markdown')
+    await m.reply(f"Daftar Premium:\n" + "\n".join(seller_list), parse_mode='MarkdownV2')
 
 
 @bot.on_message(filters.private & filters.command("protect"))
