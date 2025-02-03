@@ -205,7 +205,7 @@ async def list_sellers(c, m):
             user = await bot.get_chat(user_id)  # Mengambil objek pengguna berdasarkan ID
             seller_list.append(f"• {user.mention} (ID: {user_id})")  # Menggunakan mention
         except Exception as e:
-            seller_list.append(f"• User ID: {user_id} (tidak dapat diambil)")  # Menangani kesalahan jika pengguna tidak ditemukan
+            seller_list.append(f"• {user.mention} (ID: {user_id})")  # Menangani kesalahan jika pengguna tidak ditemukan
 
     await m.reply(f"Daftar Premium:\n" + "\n".join(seller_list))
     
