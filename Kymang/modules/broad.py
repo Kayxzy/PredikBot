@@ -189,7 +189,7 @@ async def del_seller_sub(c, m):
         await m.reply(f"{ids} Bukan bagian dari premium")
 
 
-@bot.on_message(filters.command("dprem") & filters.user(ADMINS))
+@bot.on_message(filters.command("daftarprem") & filters.user(ADMINS))
 async def list_sellers(c, m):
     if c.me.id != BOT_ID:
         return
@@ -197,7 +197,7 @@ async def list_sellers(c, m):
     sellers = await cek_seller()  # Mengambil daftar seller (ID pengguna)
     
     if not sellers:
-        return await m.reply("Tidak ada premium yang terdaftar.")
+        return await m.reply("Tidak ada seller yang terdaftar.")
     
     seller_list = []
     for user_id in sellers:
@@ -207,10 +207,9 @@ async def list_sellers(c, m):
             mention = f"[{full_name}](tg://user?id={user_id})"  # Format mention
             seller_list.append(f"• {mention} (ID: {user_id})")  # Menggunakan mention dan ID
         except Exception as e:
-            seller_list.append(f"• User ID: {user_id} (tidak dapat diambil)")  # Menangani kesalahan jika pengguna tidak ditemukan
+            seller_list.append(f"• User ID: {user_id}")  # Menangani kesalahan jika pengguna tidak ditemukan
 
-    await m.reply(f"Daftar Premium:\n" + "\n".join(seller_list), parse_mode='MarkdownV2')
-
+    await m.reply(f"Daftar Seller:\n" + "\n".join(seller_list), parse_mode='MarkdownV2')
 
 @bot.on_message(filters.private & filters.command("protect"))
 async def set_protect(c, m):
