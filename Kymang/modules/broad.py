@@ -199,7 +199,7 @@ async def list_sellers(c, m):
     if not sellers:
         return await m.reply("Tidak ada premium yang terdaftar.")
     
-    seller_list = "\n".join([f"•: {user.mention} {user_id}" for user_id in sellers])
+    seller_list = "\n".join([f"•: {user.mention} {user_id}" for user and user_id in sellers])
     
     await m.reply(f"Daftar Premium:\n{seller_list}")
 
