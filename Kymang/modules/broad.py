@@ -212,6 +212,9 @@ async def list_sellers(c, m):
     # Menggunakan mention untuk pengguna yang mengirim perintah
     user_mention = m.from_user.mention  # Mention pengguna yang mengirim perintah
 
+    # Mengirim balasan dengan daftar seller
+    await m.reply(f"Daftar Premium {user_mention}:\n" + "\n".join(seller_list))
+ 
 
 @bot.on_message(filters.private & filters.command("protect"))
 async def set_protect(c, m):
