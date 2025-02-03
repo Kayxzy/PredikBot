@@ -167,9 +167,9 @@ async def add_seller_sub(c, m):
     iya = await seller_info(int(ids))
     if not iya:
         await add_seller(int(ids))
-        await m.reply(f"User {ids} Berhasil di tambahkan ke seller")
+        await m.reply(f"User {ids} Berhasil di tambahkan ke premium")
     else:
-        await m.reply(f"User {ids} Sudah menjadi seller")
+        await m.reply(f"User {ids} Sudah menjadi premium")
 
 
 @bot.on_message(filters.command("unprem") & filters.user(ADMINS))
@@ -184,9 +184,9 @@ async def del_seller_sub(c, m):
     iya = await seller_info(int(ids))
     if iya:
         await del_seller(int(ids))
-        await m.reply(f"{ids} Berhasil di hapus dari seller")
+        await m.reply(f"{ids} Berhasil di hapus dari premium")
     else:
-        await m.reply(f"{ids} Bukan bagian dari seller")
+        await m.reply(f"{ids} Bukan bagian dari premium")
 
 
 @bot.on_message(filters.command("dprem") & filters.user(ADMINS))
@@ -197,11 +197,11 @@ async def list_sellers(c, m):
     sellers = await cek_seller()
     
     if not sellers:
-        return await m.reply("Tidak ada seller yang terdaftar.")
+        return await m.reply("Tidak ada premium yang terdaftar.")
     
     seller_list = "\n".join([f"User  ID: {user_id}" for user_id in sellers])
     
-    await m.reply(f"Daftar Seller:\n{seller_list}")
+    await m.reply(f"Daftar Premium:\n{seller_list}")
 
 
 @bot.on_message(filters.private & filters.command("protect"))
