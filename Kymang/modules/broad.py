@@ -212,7 +212,7 @@ async def list_sellers(c, m):
    # Mention pengguna yang mengirim perintah
 
     await m.reply(f"Daftar Premium {user_mention}:\n" + "\n".join(seller_list))
-    
+    except
 
 @bot.on_message(filters.private & filters.command("protect"))
 async def set_protect(c, m):
