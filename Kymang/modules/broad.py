@@ -195,6 +195,7 @@ async def list_sellers(c, m):
         return
     
     sellers = await cek_seller()
+    user_id = m.from_user.id
     full_name = m.from_user.full_name
     mention = f"[{full_name}](tg://user?id={user_id})"
    
