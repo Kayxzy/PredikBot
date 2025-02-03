@@ -206,7 +206,7 @@ async def list_sellers(c, m):
             full_name = f"{user.first_name} {user.last_name}" if user.last_name else user.first_name
             mention = user.mention  # Menggunakan mention dari objek pengguna
             seller_list.append(f"• {mention} ID: {user_id}")  # Menggunakan mention dan ID
-        
+        except Exception as e:
     # Menggunakan mention untuk pengguna yang mengirim perintah
     user_mention = m.from_user.mention  # Mention pengguna yang mengirim perintah
 
