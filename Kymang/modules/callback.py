@@ -143,14 +143,18 @@ async def back_start_bc(c, callback_query: CallbackQuery):
 
     
 @bot.on_callback_query(filters.regex("get_prediction"))
-async def get_another_prediction(_, callback_query):
+async def get_another_prediction(c, callback_query):
     user_id = callback_query.from_user.id# Mendapatkan ID pengguna
     seller = await seller_info(user_id)  # Hanya menggunakan user_id untuk memeriksa seller
     
     if not seller:
-        await callback_query.message.edit(
-            "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**")
-        return
+       pesan = await c.message.edit(
+            "**Untuk mengakses fitur Premium ini, Anda perlu melakukan pembelian.**\n**Beli sekarang untuk menggunakan Predictor**",
+           reply_markup = InlineKeyboardMarkup([
+        [InlineKeyboardButton("Coba Lagi", callback_data="get_prediction")],
+        [InlineKeyboardButton("Back", callback_data="back_start")]
+    ]))   
+    return
     current_time = datetime.now()
     
     # Cek apakah pengguna sudah menggunakan perintah dalam 1 menit terakhir
